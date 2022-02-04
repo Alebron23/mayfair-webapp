@@ -1,28 +1,32 @@
-import React from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
+import React from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 // TODO: uninistal carousel
-import Carousel from "react-material-ui-carousel"
+import Carousel from "react-material-ui-carousel";
 
-import { useHistory } from "react-router-dom"
-import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
-import Divider from "@material-ui/core/Divider"
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown"
-import ArrowUpIcon from "@material-ui/icons/ArrowDropUp"
-import classnames from "classnames"
-import ImageGallery from "react-image-gallery"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import WarningIcon from "@material-ui/icons/Warning"
+import { useHistory } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowUpIcon from "@material-ui/icons/ArrowDropUp";
+import classnames from "classnames";
+import ImageGallery from "react-image-gallery";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import WarningIcon from "@material-ui/icons/Warning";
 
-import CarLove from "../../imgs/carlove.png"
-import FourWheel from "../../imgs/fourwheel.png"
-import Owner from "../../imgs/owner.png"
-import ManualTrans from "../../imgs/manualLogo.png"
+import CarLove from "../../imgs/carlove.png";
+import FourWheel from "../../imgs/fourwheel.png";
+import Owner from "../../imgs/owner.png";
+import ManualTrans from "../../imgs/manualLogo.png";
 
-import { useAssetsQuery, useVehicleQuery } from "../../store/services/api"
+import {
+  useAssetsQuery,
+  useVehicleQuery,
+  baseEndpoint,
+} from "../../store/services/api";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     outerWrapper: {
       position: "relative",
@@ -159,29 +163,29 @@ const useStyles = makeStyles(theme =>
       textDecoration: "underline",
     },
   })
-)
+);
 
 export default function VehicleDetail() {
-  const classes = useStyles()
-  let history = useHistory()
+  const classes = useStyles();
+  let history = useHistory();
 
-  const vehicleId = history.location.pathname.split("/")[2]
-  const [isSpecShown, setSpecShown] = React.useState(false)
-  const [loading, setLoading] = React.useState(true)
-  const [error, setError] = React.useState(false)
+  const vehicleId = history.location.pathname.split("/")[2];
+  const [isSpecShown, setSpecShown] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
 
-  const { data: assets = [] } = useAssetsQuery()
+  const { data: assets = [] } = useAssetsQuery();
   const assetPics = assets.reduce((prev, curr) => {
-    return { ...prev, [curr.name]: { ids: curr.picIds } }
-  }, {})
-  const { data: vehicle = [] } = useVehicleQuery(vehicleId)
+    return { ...prev, [curr.name]: { ids: curr.picIds } };
+  }, {});
+  const { data: vehicle = [] } = useVehicleQuery(vehicleId);
 
   const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-  }
+  };
 
   function Item(props) {
     return (
@@ -194,16 +198,16 @@ export default function VehicleDetail() {
           }`}
           onLoad={() => {
             if (props.ind === 0) {
-              setLoading(false)
+              setLoading(false);
             }
           }}
           onError={() => {
-            setLoading(false)
-            setError(true)
+            setLoading(false);
+            setError(true);
           }}
         />
       </div>
-    )
+    );
   }
 
   return (
@@ -252,8 +256,8 @@ export default function VehicleDetail() {
                         <ImageGallery
                           showPlayButton={false}
                           items={vehicle.picIds.map((id, i) => ({
-                            original: `http://localhost:9000/vehicles/pics/${id}`,
-                            thumbnail: `http://localhost:9000/vehicles/pics/${id}`,
+                            original: `${baseEndpoint}/vehicles/pics/${id}`,
+                            thumbnail: `${baseEndpoint}/vehicles/pics/${id}`,
                             renderItem: Item,
                             ind: i,
                           }))}
@@ -274,9 +278,9 @@ export default function VehicleDetail() {
                     <span>${(vehicle.price * 1).toLocaleString("en-US")}</span>
                     <div
                       className={classes.payment}
-                      onClick={e => {
-                        e.stopPropagation()
-                        history.push("/payments-calculator")
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        history.push("/payments-calculator");
                       }}
                     >
                       {`$${Math.round(vehicle.price / 60)}/month`}
@@ -393,5 +397,5 @@ export default function VehicleDetail() {
         </div>
       </div>
     </div>
-  )
+  );
 }

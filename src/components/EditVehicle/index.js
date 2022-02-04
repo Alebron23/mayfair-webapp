@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { connect } from "react-redux"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import MenuItem from "@material-ui/core/MenuItem"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import { Form } from "react-final-form"
-import { TextField } from "mui-rff"
-import { useHistory, useLocation } from "react-router-dom"
-import _get from "lodash/get"
+import React, { useEffect, useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Form } from "react-final-form";
+import { TextField } from "mui-rff";
+import { useHistory, useLocation } from "react-router-dom";
 
 // User imports
-import { addNotif } from "../../store/notifications/actions"
-import PhotoUpload from "../VehicleUploads/Photos"
+import { addNotif } from "../../store/notifications/actions";
+import PhotoUpload from "../VehicleUploads/Photos";
 
 // Redux Imports
-import { selectIsAuthed } from "../../store/auth/reducer"
+import { selectIsAuthed } from "../../store/auth/reducer";
 import {
   useVehicleUpdateMutation,
   useVehicleQuery,
-  useCheckAuthedQuery,
-} from "../../store/services/api"
+  baseEndpoint,
+} from "../../store/services/api";
 
 // User Component imports
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -85,7 +84,6 @@ const useStyles = makeStyles(theme =>
     },
     uploadButton: {
       height: 45,
-      width: 100,
       margin: "20px 16px 16px 16px",
       width: "90%",
       maxWidth: 600,
@@ -105,109 +103,109 @@ const useStyles = makeStyles(theme =>
       position: "absolute",
     },
   })
-)
+);
 
 function EditVehicle({ addNotification, isAuthed }) {
-  const classes = useStyles()
-  const [pics, setPics] = useState([])
-  let history = useHistory()
-  let location = useLocation()
-  const vehicleId = history.location.pathname.split("/")[2]
-  const [vehicleUpdate, { isLoading }] = useVehicleUpdateMutation()
-  const { data: vehicle = {}, refetch } = useVehicleQuery(vehicleId)
-  const { picIds } = vehicle
+  const classes = useStyles();
+  const [pics, setPics] = useState([]);
+  let history = useHistory();
+  let location = useLocation();
+  const vehicleId = history.location.pathname.split("/")[2];
+  const [vehicleUpdate, { isLoading }] = useVehicleUpdateMutation();
+  const { data: vehicle = {}, refetch } = useVehicleQuery(vehicleId);
+  const { picIds } = vehicle;
 
   useEffect(() => {
     if (picIds) {
       const effectPics = picIds
-        .map(id => {
+        .map((id) => {
           // if id already exists in the array don't update it.
-          if (!pics.find(el => el.id === id)) {
+          if (!pics.find((el) => el.id === id)) {
             return {
               id,
-              url: `http://localhost:9000/vehicles/pics/${id}`,
+              url: `${baseEndpoint}/vehicles/pics/${id}`,
               loading: true,
-            }
+            };
           }
 
-          return null
+          return null;
         })
-        .filter(Boolean)
-      setPics(statePics => [...statePics, ...effectPics])
+        .filter(Boolean);
+      setPics((statePics) => [...statePics, ...effectPics]);
     }
-  }, [vehicle.picIds])
+  }, [picIds]);
 
   useEffect(() => {
     if (!isAuthed) {
-      const vehicleIdArr = location.pathname.split("/")
-      const vehicleId = vehicleIdArr[vehicleIdArr.length - 1]
-      history.push(`/vehicle/${vehicleId}`)
+      const vehicleIdArr = location.pathname.split("/");
+      const vehicleId = vehicleIdArr[vehicleIdArr.length - 1];
+      history.push(`/vehicle/${vehicleId}`);
     }
-  }, [])
+  }, []);
 
   const hasNewId = () => {
-    let hasId = false
+    let hasId = false;
 
-    pics.forEach(pic => {
+    pics.forEach((pic) => {
       if (!picIds.includes(pic.id)) {
-        hasId = true
+        hasId = true;
       }
-    })
+    });
 
-    return hasId
-  }
+    return hasId;
+  };
 
   const onSubmit = async (values, form) => {
     if (!isLoading) {
-      const fd = new FormData()
-      let res
-      const updateIds = []
+      const fd = new FormData();
+      let res;
+      const updateIds = [];
 
       pics.forEach((pic, i) => {
         if (!vehicle.picIds.includes(pic.id) && pic.file) {
-          fd.append("uploaded_files", pic.file, pic.name)
-          updateIds.push(pic.id)
+          fd.append("uploaded_files", pic.file, pic.name);
+          updateIds.push(pic.id);
         }
-      })
+      });
 
       // Form appendages
-      fd.append("vin", values.vin)
-      fd.append("year", values.year)
-      fd.append("make", values.make)
-      fd.append("model", values.model)
-      fd.append("mileage", values.mileage)
-      fd.append("price", values.price)
-      fd.append("drivetrain", values.drivetrain)
-      fd.append("transmission", values.transmission)
-      fd.append("motor", values.motor)
-      fd.append("description", values.description)
-      fd.append("picIds", JSON.stringify(picIds)) // JSON.stringify(picIds)
+      fd.append("vin", values.vin);
+      fd.append("year", values.year);
+      fd.append("make", values.make);
+      fd.append("model", values.model);
+      fd.append("mileage", values.mileage);
+      fd.append("price", values.price);
+      fd.append("drivetrain", values.drivetrain);
+      fd.append("transmission", values.transmission);
+      fd.append("motor", values.motor);
+      fd.append("description", values.description);
+      fd.append("picIds", JSON.stringify(picIds)); // JSON.stringify(picIds)
 
       try {
         // FormData transforms the request you attach it to and puts it's own headers
         // so you can't override the headers if you pass in formdata
-        res = await vehicleUpdate({ vehicleId, fd })
+        res = await vehicleUpdate({ vehicleId, fd });
 
         if (res && res.data && res.data._id) {
-          console.log(res)
+          console.log(res);
           if (updateIds.length) {
-            setPics(statePics => {
+            setPics((statePics) => {
               return statePics
-                .map(statePic =>
+                .map((statePic) =>
                   updateIds.includes(statePic.id) ? undefined : statePic
                 )
-                .filter(Boolean)
-            })
+                .filter(Boolean);
+            });
           }
-          form.reset(res.data)
-          addNotification("vehicleUpload", "Upload Successful", "success")
+          form.reset(res.data);
+          addNotification("vehicleUpload", "Upload Successful", "success");
         }
       } catch (err) {
-        addNotification("vehicleUpload", "Upload Error", "error")
-        console.log("UPLOAD VEHICLE REQ:", err)
+        addNotification("vehicleUpload", "Upload Error", "error");
+        console.log("UPLOAD VEHICLE REQ:", err);
       }
     }
-  }
+  };
 
   return (
     <Grid
@@ -223,7 +221,7 @@ function EditVehicle({ addNotification, isAuthed }) {
           <Form
             onSubmit={onSubmit}
             initialValues={vehicle}
-            validate={values => {
+            validate={(values) => {
               const requiredFields = [
                 "vin",
                 "year",
@@ -234,22 +232,22 @@ function EditVehicle({ addNotification, isAuthed }) {
                 "drivetrain",
                 "motor",
                 "description",
-              ]
-              let errors = {}
+              ];
+              let errors = {};
 
-              requiredFields.forEach(field => {
+              requiredFields.forEach((field) => {
                 if (field) {
                   // @ts-ignore
                   if (!values[field]) {
                     errors = {
                       ...errors,
                       [field]: "required",
-                    }
+                    };
                   }
                 }
-              })
+              });
 
-              return errors
+              return errors;
             }}
           >
             {({ handleSubmit, submitting, pristine, valid }) => (
@@ -431,17 +429,17 @@ function EditVehicle({ addNotification, isAuthed }) {
         </>
       )}
     </Grid>
-  )
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
 const EditVehicleWrapper = connect(mapStateToProps, {
   addNotification: addNotif,
-})(EditVehicle)
+})(EditVehicle);
 
-export default EditVehicleWrapper
+export default EditVehicleWrapper;

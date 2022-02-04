@@ -1,44 +1,45 @@
-import React from "react"
-import axios from "axios"
-import { createStyles, makeStyles, fade } from "@material-ui/core/styles"
-import { connect } from "react-redux"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import SearchIcon from "@material-ui/icons/Search"
-import LocationOnIcon from "@material-ui/icons/LocationOn"
-import Popper from "@material-ui/core/Popper"
-import Paper from "@material-ui/core/Paper"
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown"
-import InputBase from "@material-ui/core/InputBase"
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
-import Grid from "@material-ui/core/Grid"
-import List from "@material-ui/core/List"
-import Divider from "@material-ui/core/Divider"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import CarIcon from "@material-ui/icons/DirectionsCar"
-import SettingsIcon from "@material-ui/icons/Settings"
-import ExitIcon from "@material-ui/icons/ExitToApp"
+import React from "react";
+import axios from "axios";
+import { createStyles, makeStyles, fade } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import Popper from "@material-ui/core/Popper";
+import Paper from "@material-ui/core/Paper";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import InputBase from "@material-ui/core/InputBase";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import CarIcon from "@material-ui/icons/DirectionsCar";
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitIcon from "@material-ui/icons/ExitToApp";
 
 // import PaymentIcon from "@material-ui/icons/Payment";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance"
-import AccountCircleIcon from "@material-ui/icons/AccountCircle"
-import _debounce from "lodash/debounce"
-import { useHistory, useLocation } from "react-router-dom"
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import _debounce from "lodash/debounce";
+import { useHistory, useLocation } from "react-router-dom";
 
-import Logo from "../../imgs/logoTransparent.png"
-import MayfairMap from "../../imgs/mayfairmap.png"
-import { setSearching } from "../../store/vehicles/actions"
-import { addNotif } from "../../store/notifications/actions"
-import { setIsAuthed } from "../../store/auth/reducer"
-import { selectVehicleSearch } from "../../store/vehicles/selectors"
-import { selectIsAuthed } from "../../store/auth/reducer"
+import Logo from "../../imgs/logoTransparent.png";
+import MayfairMap from "../../imgs/mayfairmap.png";
+import { setSearching } from "../../store/vehicles/actions";
+import { addNotif } from "../../store/notifications/actions";
+import { setIsAuthed } from "../../store/auth/reducer";
+import { selectVehicleSearch } from "../../store/vehicles/selectors";
+import { selectIsAuthed } from "../../store/auth/reducer";
+import { baseEndpoint } from "../../store/services/api";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -169,7 +170,7 @@ const useStyles = makeStyles(theme =>
       bottom: 0,
     },
   })
-)
+);
 
 function ButtonAppBar({
   searching,
@@ -178,58 +179,58 @@ function ButtonAppBar({
   setIsAuthed,
   isAuthed,
 }) {
-  const classes = useStyles()
-  let history = useHistory()
-  const [searchText, setSearchText] = React.useState("")
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const location = useLocation()
-  const open = Boolean(anchorEl)
-  const id = open ? "simple-popper" : undefined
-  const pathname = location.pathname
+  const classes = useStyles();
+  let history = useHistory();
+  const [searchText, setSearchText] = React.useState("");
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+  const pathname = location.pathname;
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:9000/users/logout", {
+      await axios.get(`${baseEndpoint}/users/logout`, {
         withCredentials: true,
-      })
-      setIsAuthed(false)
-      addNotification("logout", "Successful Log Out", "success")
+      });
+      setIsAuthed(false);
+      addNotification("logout", "Successful Log Out", "success");
     } catch (err) {
-      console.log("logout error:", err)
-      addNotification("logout", "Error Logging Out", "error")
+      console.log("logout error:", err);
+      addNotification("logout", "Error Logging Out", "error");
     }
-  }
+  };
 
-  const handlePopoverOpen = event => {
-    setAnchorEl(event.currentTarget)
-  }
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const debounceHandler = React.useCallback(
-    _debounce(value => {
-      setSearching(false)
+    _debounce((value) => {
+      setSearching(false);
     }, 1000),
     []
-  )
+  );
 
   const handleChange = React.useCallback(
-    e => {
-      setSearchText(e.target.value)
+    (e) => {
+      setSearchText(e.target.value);
 
       if (!searching) {
-        setSearching(true)
+        setSearching(true);
       }
 
-      debounceHandler(e.target.value)
+      debounceHandler(e.target.value);
     },
     [searching, setSearching, debounceHandler]
-  )
+  );
 
-  const handleDrawerChange = () => setDrawerOpen(!drawerOpen)
+  const handleDrawerChange = () => setDrawerOpen(!drawerOpen);
 
   return (
     <div className={classes.root}>
@@ -324,8 +325,8 @@ function ButtonAppBar({
                 button
                 key={"Vehicles"}
                 onClick={() => {
-                  history.push("/")
-                  handleDrawerChange()
+                  history.push("/");
+                  handleDrawerChange();
                 }}
               >
                 <ListItemIcon>
@@ -339,8 +340,8 @@ function ButtonAppBar({
                 component="a"
                 key="creditApp"
                 onClick={() => {
-                  history.push("/credit-app")
-                  handleDrawerChange()
+                  history.push("/credit-app");
+                  handleDrawerChange();
                 }}
               >
                 <ListItemIcon>
@@ -352,8 +353,8 @@ function ButtonAppBar({
                 button
                 key={"Info"}
                 onClick={() => {
-                  history.push("/info")
-                  handleDrawerChange()
+                  history.push("/info");
+                  handleDrawerChange();
                 }}
               >
                 <ListItemIcon>
@@ -367,8 +368,8 @@ function ButtonAppBar({
                   button
                   key={"Admin"}
                   onClick={() => {
-                    history.push("/login")
-                    handleDrawerChange()
+                    history.push("/login");
+                    handleDrawerChange();
                   }}
                   className={classes.adminItem}
                 >
@@ -384,9 +385,9 @@ function ButtonAppBar({
                   button
                   key={"Logout"}
                   onClick={() => {
-                    handleLogout()
-                    handleDrawerChange()
-                    history.push("/")
+                    handleLogout();
+                    handleDrawerChange();
+                    history.push("/");
                   }}
                   className={classes.adminItem}
                 >
@@ -401,20 +402,20 @@ function ButtonAppBar({
         </Toolbar>
       </AppBar>
     </div>
-  )
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     searching: selectVehicleSearch(state),
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
 const AppWrapper = connect(mapStateToProps, {
   addNotification: addNotif,
   setSearching,
   setIsAuthed,
-})(ButtonAppBar)
+})(ButtonAppBar);
 
-export default AppWrapper
+export default AppWrapper;

@@ -1,11 +1,13 @@
-import React, { useState } from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import { connect } from "react-redux"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import WarningIcon from "@material-ui/icons/Warning"
+import React, { useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import { connect } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import WarningIcon from "@material-ui/icons/Warning";
 
-const useStyles = makeStyles(theme =>
+import { baseEndpoint } from "../../store/services/api";
+
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -49,15 +51,13 @@ const useStyles = makeStyles(theme =>
       height: "50px !important",
     },
   })
-)
+);
 
 function Pic({ id }) {
-  const classes = useStyles()
-  const [loading, setLoading] = useState(true)
-  const [hasErrored, setHasErrored] = useState(false)
+  const classes = useStyles();
+  const [loading, setLoading] = useState(true);
+  const [hasErrored, setHasErrored] = useState(false);
 
-  // https://uploads-ssl.webflow.com/583347ca8f6c7ee058111b55/5afc770caa130421393fa412_google-doc-error-message.png
-  // `http://localhost:9000/vehicles/pics/${id}`
   return (
     <Grid
       className={classes.root}
@@ -74,14 +74,14 @@ function Pic({ id }) {
         id && (
           <img
             className={classes.pic}
-            src={`http://localhost:9000/vehicles/pics/${id}`}
+            src={`${baseEndpoint}/vehicles/pics/${id}`}
             alt="vehicle"
             onLoad={() => setLoading(false)}
             width={600}
             height={400}
             onError={() => {
-              setHasErrored(true)
-              setLoading(false)
+              setHasErrored(true);
+              setLoading(false);
             }}
           />
         )
@@ -98,13 +98,13 @@ function Pic({ id }) {
         </Grid>
       )}
     </Grid>
-  )
+  );
 }
 
-const mapStateToProps = state => {
-  return {}
-}
+const mapStateToProps = (state) => {
+  return {};
+};
 
-const PicWrapper = connect(mapStateToProps, {})(Pic)
+const PicWrapper = connect(mapStateToProps, {})(Pic);
 
-export default PicWrapper
+export default PicWrapper;

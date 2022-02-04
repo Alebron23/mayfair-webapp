@@ -1,19 +1,19 @@
-import React from "react"
-import { useHistory } from "react-router-dom"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { connect } from "react-redux"
-import Grid from "@mui/material/Grid"
-import Button from "@material-ui/core/Button"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import HelmetWrapper from "../HelmetWrapper"
-import VehicleListItem from "./ListItem"
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Grid from "@mui/material/Grid";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import HelmetWrapper from "../HelmetWrapper";
+import VehicleListItem from "./ListItem";
 
 // api imports
-import { useVehiclesQuery } from "../../store/services/api"
-import { selectVehicleSearch } from "../../store/vehicles/selectors"
-import { selectIsAuthed } from "../../store/auth/reducer"
+import { useVehiclesQuery } from "../../store/services/api";
+import { selectVehicleSearch } from "../../store/vehicles/selectors";
+import { selectIsAuthed } from "../../store/auth/reducer";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       height: "calc(100vh - 56px)",
@@ -32,13 +32,14 @@ const useStyles = makeStyles(theme =>
       margin: "16px auto 0",
     },
   })
-)
+);
 
 function VehicleList({ searching, isAuthed }) {
-  const classes = useStyles()
-  const { data: vehicles = [], isFetching, isLoading } = useVehiclesQuery()
-  let history = useHistory()
-
+  const classes = useStyles();
+  const { data: vehicles = [], isFetching, isLoading } = useVehiclesQuery();
+  let history = useHistory();
+  // TODO: Fix No data state and isLoading state.
+  // Now just dispaly No Data and ...loading
   return (
     <>
       {isAuthed && (
@@ -70,20 +71,20 @@ function VehicleList({ searching, isAuthed }) {
         )}
       </Grid>
     </>
-  )
+  );
 }
 
 // vehicles.map((vehicle, i) => {
 //   return <VehicleListItem vehicle={vehicle} key={i} />
 // })
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     searching: selectVehicleSearch(state),
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
-const VehicleWrapper = connect(mapStateToProps, {})(VehicleList)
+const VehicleWrapper = connect(mapStateToProps, {})(VehicleList);
 
-export default VehicleWrapper
+export default VehicleWrapper;
