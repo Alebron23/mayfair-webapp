@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) =>
       },
     },
     title: {
-      flexGrow: 1,
       display: "none",
 
       "&:hover": {
@@ -289,7 +288,11 @@ function ButtonAppBar({
                     rel="noopener noreferrer"
                     className={classes.imgLink}
                   >
-                    <img src={MayfairMap} className={classes.mapImg} />
+                    <img
+                      src={MayfairMap}
+                      className={classes.mapImg}
+                      alt="Mayfair Motors Logo"
+                    />
                   </a>
                 </Grid>
               </Paper>

@@ -1,20 +1,21 @@
-import React from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import Grid from "@mui/material/Grid"
-import Divider from "@material-ui/core/Divider"
-import InfoIcon from "@material-ui/icons/Info"
-import ToolTip from "@material-ui/core/Tooltip"
-import Paper from "@material-ui/core/Paper"
-import { useHistory } from "react-router-dom"
-import { connect } from "react-redux"
+import React from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Grid from "@mui/material/Grid";
+import Divider from "@material-ui/core/Divider";
+import InfoIcon from "@material-ui/icons/Info";
+import ToolTip from "@material-ui/core/Tooltip";
+import Paper from "@material-ui/core/Paper";
+import Skeleton from "@mui/material/Skeleton";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 // reducer imports
-import { selectIsAuthed } from "../../store/auth/reducer"
+import { selectIsAuthed } from "../../store/auth/reducer";
 
 // component imports
-import Pic from "./Pic"
+import Pic from "./Pic";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       border: "1px solid grey",
@@ -81,58 +82,70 @@ const useStyles = makeStyles(theme =>
       marginLeft: theme.spacing(4),
     },
   })
-)
+);
 
 // NOTE: Had to fix authentication issue with the session by using axios instead of the base Fetch
 // method that rtk query comes with.
-function ListItem({ vehicle = {}, isAuthed }) {
-  const classes = useStyles()
-  let history = useHistory()
-  const { picIds } = vehicle
-  const price = Number.parseFloat(vehicle.price.replace(/,/g, ""), 10)
-  const payments = Math.floor(price / 60 + 40)
+function ListItem({ vehicle = {}, isAuthed, isLoading }) {
+  const classes = useStyles();
+  let history = useHistory();
+  const { picIds } = vehicle;
+  const price = Number.parseFloat(vehicle.price.replace(/,/g, ""), 10);
+  const payments = Math.floor(price / 60 + 40);
 
   return (
     <Grid item xs={12} md={6} xl={4} style={{ padding: 8 }}>
       <div
         className={classes.root}
         onClick={() => {
-          if (isAuthed) history.push(`/edit/${vehicle._id}`)
-          else history.push(`/vehicle/${vehicle._id}`)
+          if (isAuthed) history.push(`/edit/${vehicle._id}`);
+          else history.push(`/vehicle/${vehicle._id}`);
         }}
       >
         <div className={classes.imgContainer}>
-          <Pic id={picIds[0]} />
+          <Pic id={picIds[0]} isLoading={isLoading} />
         </div>
 
         <Paper elevation={1} className={classes.info}>
-          <div className={classes.blueText}>
-            {`${vehicle.year} ${vehicle.make}`} {`${vehicle.model}`}
-          </div>
-
-          <div className={classes.price}>
-            <span>{`$${(vehicle.price * 1).toLocaleString("en-US")}`}</span> ·{" "}
-            <span>{`${(vehicle.mileage * 1).toLocaleString(
-              "en-US"
-            )} miles`}</span>
-          </div>
-
-          <Divider />
-          <div className={classes.payments}>
-            <span className={classes.paymentsSpan}>Est. ${payments}/month</span>
-          </div>
+          {isLoading ? (
+            <>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton width="60%" />
+            </>
+          ) : (
+            <>
+              {" "}
+              <div className={classes.blueText}>
+                {`${vehicle.year} ${vehicle.make}`} {`${vehicle.model}`}
+              </div>
+              <div className={classes.price}>
+                <span>{`$${(vehicle.price * 1).toLocaleString("en-US")}`}</span>{" "}
+                ·{" "}
+                <span>{`${(vehicle.mileage * 1).toLocaleString(
+                  "en-US"
+                )} miles`}</span>
+              </div>
+              <Divider />
+              <div className={classes.payments}>
+                <span className={classes.paymentsSpan}>
+                  Est. ${payments}/month
+                </span>
+              </div>{" "}
+            </>
+          )}
         </Paper>
       </div>
     </Grid>
-  )
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
-const ListItemWrapper = connect(mapStateToProps, {})(ListItem)
+const ListItemWrapper = connect(mapStateToProps, {})(ListItem);
 
-export default ListItemWrapper
+export default ListItemWrapper;

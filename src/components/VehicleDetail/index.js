@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     imgSpinner: {
-      width: "30% !important",
+      width: "50px !important",
       height: "initial !important",
     },
     warningIcon: {
@@ -173,19 +173,13 @@ export default function VehicleDetail() {
   const [isSpecShown, setSpecShown] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-
-  const { data: assets = [] } = useAssetsQuery();
-  const assetPics = assets.reduce((prev, curr) => {
-    return { ...prev, [curr.name]: { ids: curr.picIds } };
-  }, {});
   const { data: vehicle = [] } = useVehicleQuery(vehicleId);
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  //TODO: use asset query
+  // const { data: assets = [] } = useAssetsQuery();
+  // const assetPics = assets.reduce((prev, curr) => {
+  //   return { ...prev, [curr.name]: { ids: curr.picIds } };
+  // }, {});
 
   function Item(props) {
     return (

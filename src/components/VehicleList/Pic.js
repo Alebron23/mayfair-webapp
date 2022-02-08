@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import WarningIcon from "@material-ui/icons/Warning";
+import Skeleton from "@mui/material/Skeleton";
 
 import { baseEndpoint } from "../../store/services/api";
 
@@ -53,11 +54,11 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function Pic({ id }) {
+function Pic({ id, isLoading }) {
   const classes = useStyles();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isLoading);
   const [hasErrored, setHasErrored] = useState(false);
-
+  console.log(isLoading);
   return (
     <Grid
       className={classes.root}
@@ -94,7 +95,8 @@ function Pic({ id }) {
           justify="center"
           className={classes.circularContainer}
         >
-          <CircularProgress className={classes.imgSpinner} />
+          {/* <CircularProgress className={classes.imgSpinner} /> */}
+          <Skeleton variant="rectangular" width="100%" height="100%" />
         </Grid>
       )}
     </Grid>

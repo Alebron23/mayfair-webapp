@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import CloudOffIcon from "@mui/icons-material/CloudOff";
 import HelmetWrapper from "../HelmetWrapper";
 import VehicleListItem from "./ListItem";
 
@@ -31,15 +32,24 @@ const useStyles = makeStyles((theme) =>
       display: "block",
       margin: "16px auto 0",
     },
+    iconContainer: {
+      margin: "0 auto",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    cloudIcon: {
+      fontSize: "3rem !important",
+    },
   })
 );
 
 function VehicleList({ searching, isAuthed }) {
   const classes = useStyles();
-  const { data: vehicles = [], isFetching, isLoading } = useVehiclesQuery();
+  const { data: vehicles = [], isLoading } = useVehiclesQuery();
   let history = useHistory();
-  // TODO: Fix No data state and isLoading state.
-  // Now just dispaly No Data and ...loading
+
   return (
     <>
       {isAuthed && (
@@ -60,14 +70,16 @@ function VehicleList({ searching, isAuthed }) {
 
         {searching ? (
           <CircularProgress className={classes.loadingSpiner} />
-        ) : isFetching || isLoading ? (
-          "...loading"
-        ) : vehicles.length > 0 ? (
-          vehicles.map((vehicle, i) => (
-            <VehicleListItem vehicle={vehicle} key={i} />
-          ))
+        ) : !isLoading && vehicles.length < 1 ? (
+          <div className={classes.iconContainer}>
+            <CloudOffIcon className={classes.cloudIcon} />
+            <div>No Data Loaded.</div>
+            <div>Check Your Network Connection.</div>
+          </div>
         ) : (
-          <div>No Data</div>
+          vehicles.map((vehicle, i) => (
+            <VehicleListItem vehicle={vehicle} key={i} isLoading={isLoading} />
+          ))
         )}
       </Grid>
     </>
