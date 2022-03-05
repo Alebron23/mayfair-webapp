@@ -57,7 +57,7 @@ function Pic({ id }) {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [hasErrored, setHasErrored] = useState(false);
-  console.log("Pic Loading: ", loading);
+
   return (
     <Grid
       className={classes.root}

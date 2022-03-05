@@ -17,11 +17,7 @@ import FourWheel from "../../imgs/fourwheel.png";
 import Owner from "../../imgs/owner.png";
 import ManualTrans from "../../imgs/manualLogo.png";
 
-import {
-  useAssetsQuery,
-  useVehicleQuery,
-  baseEndpoint,
-} from "../../store/services/api";
+import { useVehicleQuery, baseEndpoint } from "../../store/services/api";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -173,13 +169,6 @@ export default function VehicleDetail() {
   const [error, setError] = React.useState(false);
   const { data: vehicle = [] } = useVehicleQuery(vehicleId);
 
-  //TODO: use asset query
-  const { data: assets = [] } = useAssetsQuery();
-  const assetPics = assets.reduce((prev, curr) => {
-    return { ...prev, [curr.name]: { ids: curr.picIds } };
-  }, {});
-  console.log(assetPics);
-
   function Item(props) {
     return (
       <div>
@@ -310,7 +299,7 @@ export default function VehicleDetail() {
                     </span>
                   </span>
                 </div>
-                {console.log(vehicle)}
+
                 {vehicle.drivetrain === "4WD" && (
                   <div className={classes.infoImgContainer}>
                     <img

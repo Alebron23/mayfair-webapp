@@ -131,14 +131,13 @@ function Login({
         password: values.password,
       });
     }
-    console.log(loginRes);
+
     if (_has(loginRes, "data.user._id") || _has(registerRes, "data.user._id")) {
       form.restart();
       history.push("/");
       setIsAuthed(true);
       addNotification("login", "Log In Successful", "success");
     } else if (_has(loginRes, "error")) {
-      console.log("ERROR:", loginRes.error);
       addNotification("login", "Error Logging In", "error");
     }
   };

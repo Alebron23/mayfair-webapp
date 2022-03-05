@@ -190,7 +190,6 @@ function EditVehicle({ addNotification, isAuthed }) {
         res = await vehicleUpdate({ vehicleId, fd });
 
         if (res && res.data && res.data._id) {
-          console.log(res);
           if (updateIds.length) {
             setPics((statePics) => {
               return statePics
@@ -205,7 +204,6 @@ function EditVehicle({ addNotification, isAuthed }) {
         }
       } catch (err) {
         addNotification("vehicleUpload", "Upload Error", "error");
-        console.log("UPLOAD VEHICLE REQ:", err);
       }
     }
   };

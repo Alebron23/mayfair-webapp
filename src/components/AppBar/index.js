@@ -196,7 +196,6 @@ function ButtonAppBar({
       setIsAuthed(false);
       addNotification("logout", "Successful Log Out", "success");
     } catch (err) {
-      console.log("logout error:", err);
       addNotification("logout", "Error Logging Out", "error");
     }
   };

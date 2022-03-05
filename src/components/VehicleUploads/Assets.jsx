@@ -60,7 +60,7 @@ function AssetsUploader({ addNotification }) {
 
     try {
       uploadRes = await uploadAsset(fd);
-      console.log(uploadRes);
+
       if (_has(uploadRes, "data.id")) {
         form.restart();
         setPics([]);

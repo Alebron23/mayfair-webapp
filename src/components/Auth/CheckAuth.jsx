@@ -21,7 +21,6 @@ function CheckAuth({ setIsAuthed }) {
         console.log("check auth error:", err);
       }
     })();
-    // TODO: does pathname need to be referenced in
   }, [setIsAuthed]);
 
   return <div />;

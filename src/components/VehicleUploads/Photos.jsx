@@ -115,7 +115,7 @@ function Pic({ pic, onRemovePic, setPics, isUpdateForm }) {
         <>
           <img
             className={classes.pic}
-            src={`asfa`} // pic.url
+            src={pic.url}
             alt="car uploading"
             onLoad={() => {
               setPics((statePics) =>
@@ -127,9 +127,6 @@ function Pic({ pic, onRemovePic, setPics, isUpdateForm }) {
               );
             }}
             onError={() => {
-              // TODO: Add error state?
-              console.log("IMAGE FAILED TO LOAD");
-
               setError(true);
             }}
           />
@@ -199,7 +196,6 @@ function PhotoInput({
           refetch();
         }
       } catch (err) {
-        console.log("DELTE ERR:", err);
         addNotification("picDelete", "Error deleting Picture", "error");
         setPics((pics) => {
           return pics.map((pic) => {
