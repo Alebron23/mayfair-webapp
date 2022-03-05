@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) =>
-    createStyles({
-        gradientButton: {
-            margin: "0 auto",
+  createStyles({
+    gradientButton: {
+      margin: "0 auto",
       display: "flex",
       alignItems: "center",
       width: "40%",
@@ -21,19 +20,16 @@ const useStyles = makeStyles((theme) =>
       "&:disabled": {
         border: "none",
       },
-        }
-    })
+    },
+  })
 );
 
 export function GradientButton({ children, valid, ...props }) {
-    const classes = useStyles({ valid });
+  const classes = useStyles({ valid });
 
-    return (
-        <Button
-           {...props}
-            className={classes.gradientButton}
-          >
-            {children}
-          </Button>
-    );
+  return (
+    <Button {...props} className={classes.gradientButton}>
+      {children}
+    </Button>
+  );
 }

@@ -2,8 +2,6 @@ import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@mui/material/Grid";
 import Divider from "@material-ui/core/Divider";
-import InfoIcon from "@material-ui/icons/Info";
-import ToolTip from "@material-ui/core/Tooltip";
 import Paper from "@material-ui/core/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import { useHistory } from "react-router-dom";

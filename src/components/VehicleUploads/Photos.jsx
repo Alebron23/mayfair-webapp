@@ -1,19 +1,20 @@
-import React, { useEffect, useState, useRef } from "react"
-import _has from "lodash/has"
-import { v4 as uuidv4 } from "uuid"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { connect } from "react-redux"
-import Grid from "@material-ui/core/Grid"
-import PicIcon from "@material-ui/icons/AddAPhoto"
-import CancelIcon from "@material-ui/icons/Cancel"
-import CircularProgress from "@material-ui/core/CircularProgress"
+import React, { useRef } from "react";
+import _has from "lodash/has";
+import { v4 as uuidv4 } from "uuid";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import PicIcon from "@material-ui/icons/AddAPhoto";
+import CancelIcon from "@material-ui/icons/Cancel";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // User imports
-import { addNotif } from "../../store/notifications/actions"
-import { useDeletePicMutation, usePicQuery } from "../../store/services/api"
-import DeleteDialog from "./DeleteDialog"
+import { addNotif } from "../../store/notifications/actions";
+import { useDeletePicMutation } from "../../store/services/api";
+import DeleteDialog from "./DeleteDialog";
+import WarningIcon from "../common/WarningIcon";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -79,22 +80,23 @@ const useStyles = makeStyles(theme =>
       position: "absolute",
     },
   })
-)
+);
 
-const imgId = uuidv4()
+const imgId = uuidv4();
 
 function Pic({ pic, onRemovePic, setPics, isUpdateForm }) {
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
-  const { id } = pic
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const { id } = pic;
 
   const handleClickOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <Grid
@@ -107,33 +109,44 @@ function Pic({ pic, onRemovePic, setPics, isUpdateForm }) {
       alignItems="center"
       justify="center"
     >
-      <img
-        className={classes.pic}
-        src={pic.url}
-        alt="car picture"
-        onLoad={() => {
-          setPics(statePics =>
-            statePics.map(statePic =>
-              statePic.id === id ? { ...statePic, loading: false } : statePic
-            )
-          )
-        }}
-        onError={() => {
-          // TODO: Add error state?
-          console.log("IMAGE FAILED TO LOAD")
-        }}
-      />
-      <CancelIcon
-        className={classes.imgBtn}
-        onClick={() => {
-          if (isUpdateForm) {
-            handleClickOpen()
-          } else {
-            onRemovePic(id)
-          }
-        }}
-      />
-      {pic.loading && <CircularProgress className={classes.spinner} />}
+      {error ? (
+        <WarningIcon />
+      ) : (
+        <>
+          <img
+            className={classes.pic}
+            src={`asfa`} // pic.url
+            alt="car uploading"
+            onLoad={() => {
+              setPics((statePics) =>
+                statePics.map((statePic) =>
+                  statePic.id === id
+                    ? { ...statePic, loading: false }
+                    : statePic
+                )
+              );
+            }}
+            onError={() => {
+              // TODO: Add error state?
+              console.log("IMAGE FAILED TO LOAD");
+
+              setError(true);
+            }}
+          />
+          <CancelIcon
+            className={classes.imgBtn}
+            onClick={() => {
+              if (isUpdateForm) {
+                handleClickOpen();
+              } else {
+                onRemovePic(id);
+              }
+            }}
+          />
+          {pic.loading && <CircularProgress className={classes.spinner} />}
+        </>
+      )}
+
       <DeleteDialog
         onRemovePic={onRemovePic}
         open={open}
@@ -141,7 +154,7 @@ function Pic({ pic, onRemovePic, setPics, isUpdateForm }) {
         id={id}
       />
     </Grid>
-  )
+  );
 }
 
 function PhotoInput({
@@ -153,53 +166,53 @@ function PhotoInput({
   vehiclePics = [],
   refetch,
 }) {
-  const classes = useStyles()
-  const inputEl = useRef(null)
-  const [deletePic, { isLoading }] = useDeletePicMutation()
+  const classes = useStyles();
+  const inputEl = useRef(null);
+  const [deletePic] = useDeletePicMutation();
 
-  const onFileSelected = e => {
-    const inputPics = Object.values(e.target.files)
-    const transformedPics = inputPics.map(inputPic => {
+  const onFileSelected = (e) => {
+    const inputPics = Object.values(e.target.files);
+    const transformedPics = inputPics.map((inputPic) => {
       return {
         id: uuidv4(),
         url: URL.createObjectURL(inputPic),
         file: inputPic,
-      }
-    })
+      };
+    });
 
-    setPics(statePics => [...statePics, ...transformedPics])
-  }
+    setPics((statePics) => [...statePics, ...transformedPics]);
+  };
 
-  const onRemovePic = async id => {
+  const onRemovePic = async (id) => {
     if (isUpdateForm && vehiclePics.includes(id)) {
-      setPics(pics => {
-        return pics.map(pic => {
-          return { ...pic, loading: pic.id === id }
-        })
-      })
+      setPics((pics) => {
+        return pics.map((pic) => {
+          return { ...pic, loading: pic.id === id };
+        });
+      });
 
       try {
-        const res = await deletePic({ picId: id, vehicleId })
+        const res = await deletePic({ picId: id, vehicleId });
         if (_has(res, "data.vehicleId")) {
-          setPics(newPics => newPics.filter(pic => pic.id !== id))
-          addNotification("picDelete", "Picture Delete Success", "success")
-          refetch()
+          setPics((newPics) => newPics.filter((pic) => pic.id !== id));
+          addNotification("picDelete", "Picture Delete Success", "success");
+          refetch();
         }
       } catch (err) {
-        console.log("DELTE ERR:", err)
-        addNotification("picDelete", "Error deleting Picture", "error")
-        setPics(pics => {
-          return pics.map(pic => {
-            return { ...pic, loading: pic.id === id ? false : pic.loading }
-          })
-        })
+        console.log("DELTE ERR:", err);
+        addNotification("picDelete", "Error deleting Picture", "error");
+        setPics((pics) => {
+          return pics.map((pic) => {
+            return { ...pic, loading: pic.id === id ? false : pic.loading };
+          });
+        });
       }
     } else {
-      setPics(pics.filter(pic => pic.id !== id))
+      setPics(pics.filter((pic) => pic.id !== id));
     }
-  }
+  };
 
-  const grids = pics.map(pic => {
+  const grids = pics.map((pic) => {
     return (
       <Pic
         key={pic.id}
@@ -210,8 +223,8 @@ function PhotoInput({
         setPics={setPics}
         isUpdateForm={isUpdateForm}
       />
-    )
-  })
+    );
+  });
 
   return (
     <>
@@ -275,15 +288,15 @@ function PhotoInput({
         )}
       </Grid>
     </>
-  )
+  );
 }
 
-const mapStateToProps = state => {
-  return {}
-}
+const mapStateToProps = (state) => {
+  return {};
+};
 
 const PhotoInputWrapper = connect(mapStateToProps, {
   addNotification: addNotif,
-})(PhotoInput)
+})(PhotoInput);
 
-export default PhotoInputWrapper
+export default PhotoInputWrapper;

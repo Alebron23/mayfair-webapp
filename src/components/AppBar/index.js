@@ -257,13 +257,12 @@ function ButtonAppBar({
           >
             Mayfair Motors
           </Typography>
-          <div
-            className={classes.location}
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-          >
+          <div className={classes.location}>
             <span>Roebuck, SC</span>
-            <ArrowDropDownIcon className={classes.downArrow} />
+            <ArrowDropDownIcon
+              className={classes.downArrow}
+              onClick={anchorEl ? handlePopoverClose : handlePopoverOpen}
+            />
 
             <Popper id={id} open={open} anchorEl={anchorEl}>
               <Paper style={{ padding: 16 }}>

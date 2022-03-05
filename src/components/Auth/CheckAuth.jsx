@@ -22,7 +22,7 @@ function CheckAuth({ setIsAuthed }) {
       }
     })();
     // TODO: does pathname need to be referenced in
-  }, []);
+  }, [setIsAuthed]);
 
   return <div />;
 }

@@ -2057,7 +2057,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.12":
+"@types/react@*":
   version "16.9.56"
   resolved "https://registry.npmjs.org/@types/react/-/react-16.9.56.tgz"
   integrity sha512-gIkl4J44G/qxbuC6r2Xh+D3CGZpJ+NdWTItAPmZbR5mUS+JQ8Zvzpl0ea5qT/ZT3ZNTUcDKUVqV3xBE8wv/DyQ==
@@ -2691,13 +2691,6 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
-auto-bind@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/auto-bind/-/auto-bind-2.1.1.tgz"
-  integrity sha512-NUwV1i9D3vxxY1KnfZgSZ716d6ovY7o8LfOwLhGIPFBowIb6Ln6DBW64+jCqPzUznel2hRSkQnYQqvh7/ldw8A==
-  dependencies:
-    "@types/react" "^16.8.12"
 
 autoprefixer@^9.6.1:
   version "9.8.6"
@@ -10007,14 +10000,6 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.1.tgz"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-material-ui-carousel@^1.8.1:
-  version "1.9.2"
-  resolved "https://registry.npmjs.org/react-material-ui-carousel/-/react-material-ui-carousel-1.9.2.tgz"
-  integrity sha512-3oLn4SUfKjNodQmrgNgrz/spwQY7L03mKFsl3zF3C0mk5qb6CvMp8dxSRJSxaiP+yzJCne/7Ysq/Z4hpN83Xvw==
-  dependencies:
-    auto-bind "^2.1.1"
-    react-swipeable "^5.5.1"
-
 react-redux@^7.2.1:
   version "7.2.2"
   resolved "https://registry.npmjs.org/react-redux/-/react-redux-7.2.2.tgz"
@@ -10135,13 +10120,6 @@ react-snap@^1.23.0:
     puppeteer "^1.8.0"
     serve-static "1.13.2"
     sourcemapped-stacktrace-node "2.1.8"
-
-react-swipeable@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.npmjs.org/react-swipeable/-/react-swipeable-5.5.1.tgz"
-  integrity sha512-EQObuU3Qg3JdX3WxOn5reZvOSCpU4fwpUAs+NlXSN3y+qtsO2r8VGkVnOQzmByt3BSYj9EWYdUOUfi7vaMdZZw==
-  dependencies:
-    prop-types "^15.6.2"
 
 react-text-mask@^5.4.3:
   version "5.4.3"

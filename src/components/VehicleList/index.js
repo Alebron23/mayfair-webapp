@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import CloudOffIcon from "@mui/icons-material/CloudOff";
 import HelmetWrapper from "../HelmetWrapper";
 import VehicleListItem from "./ListItem";
 
@@ -70,12 +69,6 @@ function VehicleList({ searching, isAuthed }) {
 
         {searching ? (
           <CircularProgress className={classes.loadingSpiner} />
-        ) : !isLoading && vehicles.length < 1 ? (
-          <div className={classes.iconContainer}>
-            <CloudOffIcon className={classes.cloudIcon} />
-            <div>No Data Loaded.</div>
-            <div>Check Your Network Connection.</div>
-          </div>
         ) : (
           vehicles.map((vehicle, i) => (
             <VehicleListItem vehicle={vehicle} key={i} isLoading={isLoading} />
@@ -85,10 +78,6 @@ function VehicleList({ searching, isAuthed }) {
     </>
   );
 }
-
-// vehicles.map((vehicle, i) => {
-//   return <VehicleListItem vehicle={vehicle} key={i} />
-// })
 
 const mapStateToProps = (state) => {
   return {

@@ -1,9 +1,6 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-// TODO: uninistal carousel
-import Carousel from "react-material-ui-carousel";
-
 import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -115,6 +112,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       fontSize: "1.3rem",
       margin: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px 0`,
+      wordBreak: "break-all",
     },
     payment: {
       fontSize: ".7rem",
@@ -176,10 +174,11 @@ export default function VehicleDetail() {
   const { data: vehicle = [] } = useVehicleQuery(vehicleId);
 
   //TODO: use asset query
-  // const { data: assets = [] } = useAssetsQuery();
-  // const assetPics = assets.reduce((prev, curr) => {
-  //   return { ...prev, [curr.name]: { ids: curr.picIds } };
-  // }, {});
+  const { data: assets = [] } = useAssetsQuery();
+  const assetPics = assets.reduce((prev, curr) => {
+    return { ...prev, [curr.name]: { ids: curr.picIds } };
+  }, {});
+  console.log(assetPics);
 
   function Item(props) {
     return (
@@ -231,7 +230,6 @@ export default function VehicleDetail() {
                     justify="center"
                     direction="column"
                   >
-                    {/* TODO: extract this component or component styles */}
                     <WarningIcon className={classes.warningIcon} />
                     <span className={classes.warningText}>
                       Image Failed to Load
@@ -355,9 +353,7 @@ export default function VehicleDetail() {
                   )}
                   onClick={() => setSpecShown(!isSpecShown)}
                 >
-                  <span className={classes.dropdownHeading}>
-                    Features & Specs
-                  </span>
+                  <span className={classes.dropdownHeading}>Details</span>
                   {isSpecShown ? <ArrowDropDownIcon /> : <ArrowUpIcon />}
                 </div>
                 {isSpecShown ? (
@@ -367,17 +363,7 @@ export default function VehicleDetail() {
                       classes.hoverCursor
                     )}
                   >
-                    Features
-                  </div>
-                ) : null}
-                {isSpecShown ? (
-                  <div
-                    className={classnames(
-                      classes.milesPriceContainer,
-                      classes.hoverCursor
-                    )}
-                  >
-                    Specifications
+                    {vehicle.description}
                   </div>
                 ) : null}
 

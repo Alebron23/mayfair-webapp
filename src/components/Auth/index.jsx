@@ -1,39 +1,41 @@
-import React, { useEffect } from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { connect } from "react-redux"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import Link from "@mui/material/Link"
-import InputAdornment from "@material-ui/core/InputAdornment"
-import IconButton from "@material-ui/core/IconButton"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import InfoIcon from "@material-ui/icons/Info"
-import Popover from "@mui/material/Popover"
-import Typography from "@mui/material/Typography"
-import { Form } from "react-final-form"
-import Collapse from "@mui/material/Collapse"
-import { TextField } from "mui-rff"
-import { useHistory } from "react-router-dom"
-import _has from "lodash/has"
-import CircularProgress from "@material-ui/core/CircularProgress"
+import React, { useEffect } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InfoIcon from "@material-ui/icons/Info";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import { Form } from "react-final-form";
+import Collapse from "@mui/material/Collapse";
+import { TextField } from "mui-rff";
+import { useHistory } from "react-router-dom";
+import _has from "lodash/has";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Common imports
-import { passwordReg, email } from "../common/regex"
+import { passwordReg, email } from "../common/regex";
 
 // Redux Imports
-import { addNotif } from "../../store/notifications/actions"
+import { addNotif } from "../../store/notifications/actions";
 import {
   setHasAccount,
   setIsAuthed,
   selectAuthHasAccount,
   selectIsAuthed,
-} from "../../store/auth/reducer"
-import { useLoginMutation, useRegisterMutation } from "../../store/services/api"
+} from "../../store/auth/reducer";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../store/services/api";
 
 // User Defined Components & imports
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -64,7 +66,6 @@ const useStyles = makeStyles(theme =>
     },
     uploadButton: {
       height: 45,
-      width: 100,
       margin: "20px 16px 16px 16px",
       width: "90%",
       maxWidth: 600,
@@ -79,7 +80,7 @@ const useStyles = makeStyles(theme =>
       position: "absolute",
     },
   })
-)
+);
 
 function Login({
   handleSubmit,
@@ -92,55 +93,55 @@ function Login({
   setIsAuthed,
   isAuthed,
 }) {
-  const classes = useStyles()
-  const [passwordVis, switchPasswordVis] = React.useState(false)
-  const [repasswordVis, switchRePasswordVis] = React.useState(false)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [login, { isLoading }] = useLoginMutation()
-  const [register] = useRegisterMutation()
-  const history = useHistory()
-  const open = Boolean(anchorEl)
+  const classes = useStyles();
+  const [passwordVis, switchPasswordVis] = React.useState(false);
+  const [repasswordVis, switchRePasswordVis] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [login, { isLoading }] = useLoginMutation();
+  const [register] = useRegisterMutation();
+  const history = useHistory();
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     if (isAuthed) {
-      history.push("/")
+      history.push("/");
     }
-  }, [isAuthed])
+  }, [isAuthed, history]);
 
-  const handlePopoverOpen = event => {
-    setAnchorEl(event.currentTarget)
-  }
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const onSubmit = async (values, form) => {
-    let loginRes
-    let registerRes
+    let loginRes;
+    let registerRes;
 
     if (hasAccount) {
       loginRes = await login({
         username: values.email,
         password: values.password,
-      })
+      });
     } else {
       registerRes = await register({
         username: values.email,
         password: values.password,
-      })
+      });
     }
-    console.log(loginRes)
+    console.log(loginRes);
     if (_has(loginRes, "data.user._id") || _has(registerRes, "data.user._id")) {
-      form.restart()
-      history.push("/")
-      setIsAuthed(true)
-      addNotification("login", "Log In Successful", "success")
+      form.restart();
+      history.push("/");
+      setIsAuthed(true);
+      addNotification("login", "Log In Successful", "success");
     } else if (_has(loginRes, "error")) {
-      console.log("ERROR:", loginRes.error)
-      addNotification("login", "Error Logging In", "error")
+      console.log("ERROR:", loginRes.error);
+      addNotification("login", "Error Logging In", "error");
     }
-  }
+  };
 
   return (
     <Grid
@@ -153,46 +154,46 @@ function Login({
       <h1 className={classes.title}>{hasAccount ? "Login" : "Register"}</h1>
       <Form
         onSubmit={onSubmit}
-        validate={values => {
+        validate={(values) => {
           const requiredFields = hasAccount
             ? ["email", "password"]
-            : ["email", "password", "repassword"]
-          let errors = {}
+            : ["email", "password", "repassword"];
+          let errors = {};
 
-          requiredFields.forEach(field => {
+          requiredFields.forEach((field) => {
             if (field) {
               // @ts-ignore
               if (!values[field]) {
                 errors = {
                   ...errors,
                   [field]: "required",
-                }
+                };
               }
             }
-          })
+          });
 
           if (values.email && !email.test(values.email)) {
             errors = {
               ...errors,
               email: "invalid email",
-            }
+            };
           }
 
           if (values.password && !passwordReg.test(values.password)) {
             errors = {
               ...errors,
               password: "invalid password",
-            }
+            };
           }
 
           if (!hasAccount && values.repassword !== values.password) {
             errors = {
               ...errors,
               repassword: "passwords must match",
-            }
+            };
           }
 
-          return errors
+          return errors;
         }}
       >
         {({ handleSubmit, form, submitting, pristine, values, valid }) => (
@@ -317,20 +318,20 @@ function Login({
         )}
       </Form>
     </Grid>
-  )
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     hasAccount: selectAuthHasAccount(state),
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
 const LoginFormWrapper = connect(mapStateToProps, {
   addNotification: addNotif,
   setHasAccount,
   setIsAuthed,
-})(Login)
+})(Login);
 
-export default LoginFormWrapper
+export default LoginFormWrapper;

@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { useHistory } from "react-router-dom"
-import { connect } from "react-redux"
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import MenuItem from "@material-ui/core/MenuItem"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import { Form } from "react-final-form"
-import { TextField } from "mui-rff"
+import React, { useEffect, useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Form } from "react-final-form";
+import { TextField } from "mui-rff";
 
 // User imports
-import { addNotif } from "../../store/notifications/actions"
-import PhotoUpload from "./Photos"
+import { addNotif } from "../../store/notifications/actions";
+import PhotoUpload from "./Photos";
 
 // Redux Imports
-import { selectIsAuthed } from "../../store/auth/reducer"
-import { useVehicleUploadsMutation } from "../../store/services/api"
+import { selectIsAuthed } from "../../store/auth/reducer";
+import { useVehicleUploadsMutation } from "../../store/services/api";
 
 // User Component imports
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -86,54 +86,54 @@ const useStyles = makeStyles(theme =>
       position: "absolute",
     },
   })
-)
+);
 
 function VehicleUploader({ addNotification, isAuthed }) {
-  const classes = useStyles()
-  const [pics, setPics] = useState([])
-  const [vehicleUploads, { isLoading }] = useVehicleUploadsMutation()
-  let history = useHistory()
+  const classes = useStyles();
+  const [pics, setPics] = useState([]);
+  const [vehicleUploads, { isLoading }] = useVehicleUploadsMutation();
+  let history = useHistory();
 
   useEffect(() => {
     if (!isAuthed) {
-      history.push("/")
+      history.push("/");
     }
-  }, [isAuthed])
+  }, [isAuthed, history]);
 
   const onSubmit = async (values, form) => {
     if (!isLoading) {
-      const fd = new FormData()
-      let res
+      const fd = new FormData();
+      let res;
 
       pics.forEach((pic, i) => {
-        if (pic.file) fd.append("uploaded_files", pic.file, pic.name)
-      })
+        if (pic.file) fd.append("uploaded_files", pic.file, pic.name);
+      });
 
       // Form appendages
-      fd.append("vin", values.vin)
-      fd.append("year", values.year)
-      fd.append("make", values.make)
-      fd.append("model", values.model)
-      fd.append("mileage", values.mileage)
-      fd.append("price", values.price)
-      fd.append("drivetrain", values.drivetrain)
-      fd.append("transmission", values.transmission)
-      fd.append("motor", values.motor)
-      fd.append("description", values.description)
+      fd.append("vin", values.vin);
+      fd.append("year", values.year);
+      fd.append("make", values.make);
+      fd.append("model", values.model);
+      fd.append("mileage", values.mileage);
+      fd.append("price", values.price);
+      fd.append("drivetrain", values.drivetrain);
+      fd.append("transmission", values.transmission);
+      fd.append("motor", values.motor);
+      fd.append("description", values.description);
 
       try {
-        res = await vehicleUploads(fd)
+        res = await vehicleUploads(fd);
 
         if (res && res.data) {
-          setPics([])
-          form.restart()
-          addNotification("vehicleUpload", "Upload Successful", "success")
+          setPics([]);
+          form.restart();
+          addNotification("vehicleUpload", "Upload Successful", "success");
         }
       } catch (err) {
-        console.log("UPLOAD VEHICLE REQ:", err)
+        console.log("UPLOAD VEHICLE REQ:", err);
       }
     }
-  }
+  };
 
   return (
     <Grid
@@ -146,7 +146,7 @@ function VehicleUploader({ addNotification, isAuthed }) {
       <h1 className={classes.title}>Upload Vehicle</h1>
       <Form
         onSubmit={onSubmit}
-        validate={values => {
+        validate={(values) => {
           const requiredFields = [
             "vin",
             "year",
@@ -157,22 +157,22 @@ function VehicleUploader({ addNotification, isAuthed }) {
             "drivetrain",
             "motor",
             "description",
-          ]
-          let errors = {}
+          ];
+          let errors = {};
 
-          requiredFields.forEach(field => {
+          requiredFields.forEach((field) => {
             if (field) {
               // @ts-ignore
               if (!values[field]) {
                 errors = {
                   ...errors,
                   [field]: "required",
-                }
+                };
               }
             }
-          })
+          });
 
-          return errors
+          return errors;
         }}
       >
         {({ handleSubmit, form, submitting, pristine, values, valid }) => (
@@ -337,17 +337,17 @@ function VehicleUploader({ addNotification, isAuthed }) {
         )}
       </Form>
     </Grid>
-  )
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuthed: selectIsAuthed(state),
-  }
-}
+  };
+};
 
 const VehicleUploaderWrapper = connect(mapStateToProps, {
   addNotification: addNotif,
-})(VehicleUploader)
+})(VehicleUploader);
 
-export default VehicleUploaderWrapper
+export default VehicleUploaderWrapper;

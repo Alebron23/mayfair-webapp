@@ -1,29 +1,28 @@
-import React from "react"
-import emailjs from "emailjs-com"
+import React from "react";
+import emailjs from "emailjs-com";
 
-import { reduxForm, SubmissionError } from "redux-form"
-import { connect } from "react-redux"
+import { reduxForm, SubmissionError } from "redux-form";
+import { connect } from "react-redux";
 
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
-import Paper from "@material-ui/core/Paper"
-import Grid from "@material-ui/core/Grid"
-import MenuItem from "@material-ui/core/MenuItem"
-import IconButton from "@material-ui/core/IconButton"
-import InputAdornment from "@material-ui/core/InputAdornment"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline"
-import PermIdentityIcon from "@material-ui/icons/PermIdentity"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import { GradientButton } from "../common/Buttons"
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { GradientButton } from "../common/Buttons";
 
-import { email, zipCode, cityName, ssn } from "../common/regex.js"
-import TextField from "../FormFields/MuiTextField"
-import { addNotif } from "../../store/notifications/actions"
-import HelmetWrapper from "../HelmetWrapper"
+import { email, zipCode, cityName, ssn } from "../common/regex.js";
+import TextField from "../FormFields/MuiTextField";
+import { addNotif } from "../../store/notifications/actions";
+import HelmetWrapper from "../HelmetWrapper";
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -97,27 +96,27 @@ const useStyles = makeStyles(theme =>
       color: "white",
     },
   })
-)
+);
 
-const CreditApp = props => {
-  const { handleSubmit, valid, reset, addNotification, submitting } = props
+const CreditApp = (props) => {
+  const { handleSubmit, valid, reset, addNotification, submitting } = props;
 
-  const [passwordVis, switchPasswordVis] = React.useState(false)
-  const [finComp, setFinComp] = React.useState(-2)
-  const classes = useStyles({ valid: valid && finComp > -2 })
+  const [passwordVis, switchPasswordVis] = React.useState(false);
+  const [finComp, setFinComp] = React.useState(-2);
+  const classes = useStyles({ valid: valid && finComp > -2 });
 
-  const handleChange = event => {
-    setFinComp(event.target.value)
-  }
+  const handleChange = (event) => {
+    setFinComp(event.target.value);
+  };
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     const finInfo = [
       { name: "SC Telco", email: "lebron.alex@yahoo.com" },
       { name: "OneMain Financial", email: "lebron@mayfairmotorco.com" },
-    ]
-    const loops = finComp == -1 ? finInfo : finInfo.slice(finComp, 1)
+    ];
+    const loops = finComp === -1 ? finInfo : finInfo.slice(finComp, 1);
 
-    const emailRequests = loops.map(info =>
+    const emailRequests = loops.map((info) =>
       emailjs.send(
         "service_i60y4ob",
         "creditapptemplate",
@@ -136,19 +135,19 @@ const CreditApp = props => {
         },
         "user_wlmSfJ74mBeGnWOqUUQtj"
       )
-    )
+    );
 
     return Promise.all(emailRequests)
       .then(() => {
-        reset()
-        addNotification("creditApp", "Submit Successful", "success")
-        setFinComp(-2)
+        reset();
+        addNotification("creditApp", "Submit Successful", "success");
+        setFinComp(-2);
       })
-      .catch(err => {
-        addNotification("creditApp", "Please try again", "error")
-        throw new SubmissionError()
-      })
-  }
+      .catch((err) => {
+        addNotification("creditApp", "Please try again", "error");
+        throw new SubmissionError();
+      });
+  };
 
   return (
     <div className={classes.root}>
@@ -525,10 +524,10 @@ const CreditApp = props => {
         </form>
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-const validate = (values, {}) => {
+const validate = (values) => {
   const requiredFields = [
     "fullName",
     "email",
@@ -540,59 +539,59 @@ const validate = (values, {}) => {
     "employment",
     "salary",
     "social",
-  ]
-  let errors = {}
+  ];
+  let errors = {};
 
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (field) {
       // @ts-ignore
       if (!values[field]) {
         errors = {
           ...errors,
           [field]: "required",
-        }
+        };
       }
     }
-  })
+  });
 
   if (values.email && !email.test(values.email)) {
     errors = {
       ...errors,
       email: "invalid email",
-    }
+    };
   }
 
   if (values.zip && !zipCode.test(values.zip)) {
     errors = {
       ...errors,
       zip: "invalid zip code",
-    }
+    };
   }
 
   if (values.city && !cityName.test(values.city)) {
     errors = {
       ...errors,
       city: "invalid city name",
-    }
+    };
   }
 
   if (values.social && !ssn.test(values.social)) {
     errors = {
       ...errors,
       social: "invalid social",
-    }
+    };
   }
 
-  return errors
-}
+  return errors;
+};
 
 const CreditForm = reduxForm({
   form: "creditapp",
   validate,
-})(CreditApp)
+})(CreditApp);
 
 const CreditFormWrapper = connect(null, {
   addNotification: addNotif,
-})(CreditForm)
+})(CreditForm);
 
-export default CreditFormWrapper
+export default CreditFormWrapper;

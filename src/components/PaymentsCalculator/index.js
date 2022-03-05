@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import Grid from "@material-ui/core/Grid"
+import React from "react";
+import Grid from "@material-ui/core/Grid";
 
 function PaymentsCalculator() {
   return (
@@ -13,9 +13,10 @@ function PaymentsCalculator() {
       <img
         style={{ width: "80%" }}
         src="https://www.mybanktracker.com/news/wp-content/uploads/2018/06/personal-loans-calculator.png"
+        alt="payment calculator"
       />
     </Grid>
-  )
+  );
 }
 
-export default PaymentsCalculator
+export default PaymentsCalculator;

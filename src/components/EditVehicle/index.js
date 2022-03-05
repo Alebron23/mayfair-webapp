@@ -117,21 +117,24 @@ function EditVehicle({ addNotification, isAuthed }) {
 
   useEffect(() => {
     if (picIds) {
-      const effectPics = picIds
-        .map((id) => {
-          // if id already exists in the array don't update it.
-          if (!pics.find((el) => el.id === id)) {
-            return {
-              id,
-              url: `${baseEndpoint}/vehicles/pics/${id}`,
-              loading: true,
-            };
-          }
+      setPics((statePics) => {
+        const effectPics = picIds
+          .map((id) => {
+            // if id already exists in the array don't update it.
+            if (!statePics.find((el) => el.id === id)) {
+              //!pics
+              return {
+                id,
+                url: `${baseEndpoint}/vehicles/pics/${id}`,
+                loading: true,
+              };
+            }
 
-          return null;
-        })
-        .filter(Boolean);
-      setPics((statePics) => [...statePics, ...effectPics]);
+            return null;
+          })
+          .filter(Boolean);
+        return [...statePics, ...effectPics];
+      });
     }
   }, [picIds]);
 
@@ -141,7 +144,7 @@ function EditVehicle({ addNotification, isAuthed }) {
       const vehicleId = vehicleIdArr[vehicleIdArr.length - 1];
       history.push(`/vehicle/${vehicleId}`);
     }
-  }, []);
+  }, [isAuthed, history, location.pathname]);
 
   const hasNewId = () => {
     let hasId = false;

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import WarningIcon from "@material-ui/icons/Warning";
 import Skeleton from "@mui/material/Skeleton";
 
@@ -54,11 +53,11 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function Pic({ id, isLoading }) {
+function Pic({ id }) {
   const classes = useStyles();
-  const [loading, setLoading] = useState(isLoading);
+  const [loading, setLoading] = useState(true);
   const [hasErrored, setHasErrored] = useState(false);
-  console.log(isLoading);
+  console.log("Pic Loading: ", loading);
   return (
     <Grid
       className={classes.root}
@@ -77,6 +76,7 @@ function Pic({ id, isLoading }) {
             className={classes.pic}
             src={`${baseEndpoint}/vehicles/pics/${id}`}
             alt="vehicle"
+            style={{ opacity: loading ? 0 : 1 }}
             onLoad={() => setLoading(false)}
             width={600}
             height={400}

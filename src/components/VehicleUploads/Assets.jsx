@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
@@ -43,16 +42,10 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const imgId = uuidv4();
-
 function AssetsUploader({ addNotification }) {
   const classes = useStyles();
   const [pics, setPics] = useState([]);
-  const [uploadAsset, { isLoading }] = useUploadAssetMutation();
-
-  const onRemovePic = (id) => {
-    setPics(pics.filter((pic) => pic.id !== id));
-  };
+  const [uploadAsset] = useUploadAssetMutation();
 
   const onSubmit = async (values, form) => {
     const fd = new FormData();
