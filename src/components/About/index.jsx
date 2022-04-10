@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) =>
       fontFamily: "'Poppins', sans-serif",
     },
     bottomInfo: {
-      margin: "0 16px 16px 0",
+      margin: "0 0 16px 0",
       padding: "0",
       fontSize: "1.3rem",
       fontFamily: "'Poppins', sans-serif",
@@ -38,7 +38,7 @@ function AboutPage() {
     <div className={classes.root}>
       <h1 className={classes.title}> About the Business</h1>
 
-      <Grid container spacing={1}>
+      <Grid container spacing={3}>
         <Grid container item direction="column" wrap="nowrap" xs={12} md={8}>
           <p className={classes.bottomInfo}>
             Mayfairs Motors was founded in the year 2020 by two business

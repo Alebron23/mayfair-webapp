@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) =>
 
 // NOTE: Had to fix authentication issue with the session by using axios instead of the base Fetch
 // method that rtk query comes with.
-function ListItem({ vehicle = {}, isAuthed, isLoading }) {
+const ListItem = React.memo(({ vehicle = {}, isAuthed, isLoading }) => {
   const classes = useStyles();
   let history = useHistory();
   const { picIds } = vehicle;
@@ -136,7 +136,7 @@ function ListItem({ vehicle = {}, isAuthed, isLoading }) {
       </div>
     </Grid>
   );
-}
+});
 
 const mapStateToProps = (state) => {
   return {

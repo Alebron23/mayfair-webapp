@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function Pic({ id }) {
+const Pic = React.memo(({ id }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [hasErrored, setHasErrored] = useState(false);
@@ -101,7 +101,7 @@ function Pic({ id }) {
       )}
     </Grid>
   );
-}
+});
 
 const mapStateToProps = (state) => {
   return {};

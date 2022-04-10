@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 
-export const baseEndpoint = "https://mayfair-backend.com"; // http://ec2-3-239-84-10.compute-1.amazonaws.com:9000
+export const baseEndpoint = "https://mayfair-backend.com"; // http://ec2-3-239-84-10.compute-1.amazonaws.com:9000   https://mayfair-backend.com    http://localhost:9000
 
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: "" }) =>

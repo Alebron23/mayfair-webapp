@@ -115,6 +115,7 @@ function EditVehicle({ addNotification, isAuthed }) {
   const { data: vehicle = {}, refetch } = useVehicleQuery(vehicleId);
   const { picIds } = vehicle;
 
+  // Effect to keep local pics and server pics in sync
   useEffect(() => {
     if (picIds) {
       setPics((statePics) => {
@@ -122,7 +123,6 @@ function EditVehicle({ addNotification, isAuthed }) {
           .map((id) => {
             // if id already exists in the array don't update it.
             if (!statePics.find((el) => el.id === id)) {
-              //!pics
               return {
                 id,
                 url: `${baseEndpoint}/vehicles/pics/${id}`,
