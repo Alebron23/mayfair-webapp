@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
@@ -16,9 +15,6 @@ import { TextField } from "mui-rff";
 import { useHistory } from "react-router-dom";
 import _has from "lodash/has";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-// Common imports
-import { passwordReg, email } from "../common/regex";
 
 // Redux Imports
 import { addNotif } from "../../store/notifications/actions";
@@ -34,6 +30,8 @@ import {
 } from "../../store/services/api";
 
 // User Defined Components & imports
+import { passwordReg, email } from "../common/regex";
+import { GradientButton } from "../common/Buttons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -300,18 +298,12 @@ function Login({
                 </Link>
               </Grid> */}
 
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.uploadButton}
-                disabled={!valid}
-                type="submit"
-              >
+              <GradientButton disabled={!valid} type="submit">
                 {hasAccount ? "Login" : "Register"}
                 {(isLoading || submitting) && (
                   <CircularProgress className={classes.spinner} />
                 )}
-              </Button>
+              </GradientButton>
             </Grid>
           </form>
         )}

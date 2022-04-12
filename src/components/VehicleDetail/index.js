@@ -3,34 +3,31 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ArrowUpIcon from "@material-ui/icons/ArrowDropUp";
-import classnames from "classnames";
 import ImageGallery from "react-image-gallery";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import WarningIcon from "@material-ui/icons/Warning";
 
+// Img
 import CarLove from "../../imgs/carlove.png";
 import FourWheel from "../../imgs/fourwheel.png";
 import Owner from "../../imgs/owner.png";
 import ManualTrans from "../../imgs/manualLogo.png";
 
+// Redux
 import { useVehicleQuery, baseEndpoint } from "../../store/services/api";
+
+// User Imports
+import DetailPane from "../common/DetailPane";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     outerWrapper: {
       position: "relative",
       margin: "0 auto",
-      maxWidth: 1300,
+      maxWidth: 1200,
     },
-    paddingWrapper: {
-      "@media only screen and (min-width: 900px)": {
-        paddingTop: "55%",
-      },
-    },
+    paddingWrapper: {},
     root: {
       width: "100%",
       padding: 16,
@@ -38,40 +35,26 @@ const useStyles = makeStyles((theme) =>
       boxSizing: "border-box",
       justifyContent: "center",
       flexDirection: "column",
-
-      "@media only screen and (min-width: 900px)": {
-        flexDirection: "row",
-        position: "absolute",
-        top: 0,
-        height: "100%",
-      },
     },
     imgGalleryWrapper: {
       width: "100%",
       position: "relative",
+      marginBottom: 16,
     },
     imgContainer: {
       width: "100%",
       height: "auto",
-
-      "@media only screen and (min-width: 900px)": {
-        width: "60%",
-      },
     },
     vehiclePic: {
       width: "100%",
       height: "auto",
-      borderRadius: 5,
+      borderRadius: 15,
     },
     loadingContainer: {
       width: "100%",
       height: "450px",
       border: "1px solid grey",
       borderRadius: 5,
-
-      "@media only screen and (min-width: 900px)": {
-        height: "100%",
-      },
     },
     imgSpinner: {
       width: "50px !important",
@@ -92,12 +75,12 @@ const useStyles = makeStyles((theme) =>
       boxSizing: "border-box",
       minWidth: 275,
 
-      "@media only screen and (min-width: 900px)": {
-        width: "38%",
-        marginTop: 0,
-        marginLeft: 16,
-        overflowY: "auto",
-      },
+      // "@media only screen and (min-width: 900px)": {
+      //   width: "38%",
+      //   marginTop: 0,
+      //   marginLeft: 16,
+      //   overflowY: "auto",
+      // },
     },
     infoHeading: {
       margin: 0,
@@ -164,7 +147,6 @@ export default function VehicleDetail() {
   let history = useHistory();
 
   const vehicleId = history.location.pathname.split("/")[2];
-  const [isSpecShown, setSpecShown] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const { data: vehicle = [] } = useVehicleQuery(vehicleId);
@@ -249,11 +231,9 @@ export default function VehicleDetail() {
                 )}
               </div>
 
-              <Paper className={classes.infoContainer} elevation={3}>
-                <h2 className={classes.infoHeading}>
-                  {vehicle.year} {vehicle.make} {vehicle.model}
-                </h2>
-
+              <DetailPane
+                title={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+              >
                 <div className={classes.milesPriceContainer}>
                   <span>
                     <span>${(vehicle.price * 1).toLocaleString("en-US")}</span>
@@ -334,33 +314,16 @@ export default function VehicleDetail() {
                     </span>
                   </div>
                 )}
-                <Divider />
-                <div
-                  className={classnames(
-                    classes.milesPriceContainer,
-                    classes.hoverCursor
-                  )}
-                  onClick={() => setSpecShown(!isSpecShown)}
-                >
-                  <span className={classes.dropdownHeading}>Details</span>
-                  {isSpecShown ? <ArrowDropDownIcon /> : <ArrowUpIcon />}
-                </div>
-                {isSpecShown ? (
-                  <div
-                    className={classnames(
-                      classes.milesPriceContainer,
-                      classes.hoverCursor
-                    )}
-                  >
-                    {vehicle.description}
-                  </div>
-                ) : null}
+              </DetailPane>
+
+              <DetailPane title="Details">
+                {vehicle.description}
 
                 <Divider />
                 <div className={classes.contactNumber}>
                   Call <span className={classes.phoneNumber}>864-804-7528</span>
                 </div>
-              </Paper>
+              </DetailPane>
             </>
           )}
         </div>

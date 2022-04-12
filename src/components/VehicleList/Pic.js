@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) =>
       height: "auto",
       position: "absolute",
       top: 0,
+      borderRadius: "15px 15px 0 0",
     },
     warningMsg: {
       position: "absolute",

@@ -28,16 +28,18 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       boxSizing: "border-box",
       marginBottom: theme.spacing(2),
+      margin: "0 auto",
+
+      [theme.breakpoints.up("sm")]: {
+        padding: "0 16px",
+        maxWidth: 1200,
+      },
     },
     formPaper: {
       width: "100%",
       margin: "0 auto",
       padding: theme.spacing(2),
       boxSizing: "border-box",
-
-      [theme.breakpoints.up("sm")]: {
-        width: "60%",
-      },
     },
     title: {
       textAlign: "center",
@@ -50,9 +52,9 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
 
-      [theme.breakpoints.up("sm")]: {
-        width: "60%",
-      },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "90%",
+      // },
     },
     finComp: {
       width: "95%",
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) =>
       marginBottom: 8,
 
       [theme.breakpoints.up("sm")]: {
-        width: "60%",
+        width: "100%",
       },
     },
     infoText: {
@@ -182,7 +184,7 @@ const CreditApp = (props) => {
             SC Telco
           </MenuItem>
           <MenuItem key={"onmain"} value="1">
-            OneMain Financial (Bad Credit)
+            OneMain Financial (Low Credit)
           </MenuItem>
           <MenuItem key={"both"} value="-1">
             SC Telco & OneMain Financial
@@ -513,10 +515,12 @@ const CreditApp = (props) => {
           </Grid>
           <GradientButton
             type="submit"
-            variant="outlined"
-            color="primary"
             disabled={!valid || submitting || finComp < -1}
             valid={valid && finComp > -2}
+            sx={{
+              display: "block",
+              margin: "0 auto",
+            }}
           >
             <span>Submit</span>
             {submitting && <CircularProgress className={classes.loadSpinner} />}

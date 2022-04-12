@@ -16,10 +16,17 @@ const Warning = withStyles((theme) => ({
   },
 }))(WarningIcon);
 
+const AttentionIcon = withStyles((theme) => ({
+  root: {
+    marginRight: theme.spacing(3),
+    color: "yellow",
+  },
+}))(WarningIcon);
+
 const IconVaraints = {
   success: CheckCircle,
   error: Warning,
-  // warning: StyledWarning,
+  attention: AttentionIcon,
   // info: StyledInfo,
   // pending: StyledPending
 };

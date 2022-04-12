@@ -16,11 +16,10 @@ import { selectIsAuthed } from "../../store/auth/reducer";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      height: "calc(100vh - 56px)",
-
-      "@media only screen and (min-width: 600px)": {
-        height: "calc(100vh - 64px)",
-      },
+      margin: "8px auto",
+      width: "initial",
+      maxWidth: 1200,
+      padding: "0 8px",
     },
     loadingSpiner: {
       position: "absolute",
@@ -61,7 +60,7 @@ function VehicleList({ searching, isAuthed }) {
           Add Vehicle
         </Button>
       )}
-      <Grid container style={{ margin: 8, width: "initial" }}>
+      <Grid container className={classes.root}>
         <HelmetWrapper
           title="Mayfair Motors in Spartanburg SC"
           description="Used Car Dealership in Spartanburg SC selling quality and inspected used cars"

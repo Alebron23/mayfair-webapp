@@ -1,6 +1,7 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -24,11 +25,24 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export function GradientButton({ children, valid, ...props }) {
+const redGradient =
+  "linear-gradient(90deg, rgba(253,29,29,1) 0%, rgba(248,72,58,0.9166666666666666) 49%, rgba(252,176,69,1) 100%)";
+
+export function GradientButton({ children, valid, sx, ...props }) {
   const classes = useStyles({ valid });
 
   return (
-    <Button {...props} className={classes.gradientButton}>
+    <Button
+      variant="contained"
+      sx={{
+        width: 100,
+        height: 40,
+        borderRadius: 20,
+        background: redGradient,
+        ...sx,
+      }}
+      {...props}
+    >
       {children}
     </Button>
   );
