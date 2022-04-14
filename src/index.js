@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Notifications from "./components/Notifications";
-import AppBar from "./components/AppBar";
 import VehicleList from "./components/VehicleList";
 import VehicleDetail from "./components/VehicleDetail";
 import EditVehicle from "./components/EditVehicle";
@@ -19,45 +18,115 @@ import AssetsUpload from "./components/VehicleUploads/Assets";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import store from "./store";
-
+import WithLayout from "./WithLayout";
+import MainLayout from "./layouts";
+console.log(WithLayout);
 const App = () => {
   return (
     <Provider store={store}>
       <React.StrictMode>
         <Router>
           <CheckAuth />
-          <AppBar />
-
           <Notifications />
           <Switch>
-            <Route path="/" exact>
-              <VehicleList />
-            </Route>
-            <Route path="/vehicle">
-              <VehicleDetail />
-            </Route>
-            <Route path="/info">
-              <AboutPage />
-            </Route>
-            <Route path="/credit-app">
-              <CreditApp />
-            </Route>
-            <Route path="/payments-calculator">
-              <PaymentsCalculator />
-            </Route>
-            <Route exact path="/uploads">
-              <UploadsPage />
-            </Route>
+            <Route
+              path="/"
+              exact
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={VehicleList}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              path="/vehicle"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={VehicleDetail}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              path="/info"
+              exact
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={AboutPage}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/credit-app"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={CreditApp}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/payments-calculator"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={PaymentsCalculator}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/uploads"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={UploadsPage}
+                  layout={MainLayout}
+                />
+              )}
+            />
 
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/uploads/assets">
-              <AssetsUpload />
-            </Route>
-            <Route path="/edit">
-              <EditVehicle />
-            </Route>
+            <Route
+              exact
+              path="/login"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={Login}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/uploads/assets"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={AssetsUpload}
+                  layout={MainLayout}
+                />
+              )}
+            />
+            <Route
+              path="/edit"
+              render={(matchProps) => (
+                <WithLayout
+                  {...matchProps}
+                  component={EditVehicle}
+                  layout={MainLayout}
+                />
+              )}
+            />
           </Switch>
         </Router>
       </React.StrictMode>

@@ -324,6 +324,19 @@ export default function VehicleDetail() {
                   Call <span className={classes.phoneNumber}>864-804-7528</span>
                 </div>
               </DetailPane>
+
+              <DetailPane title="Mechanical">
+                <h4 style={{ margin: 0 }}>Upgrades</h4>
+                {vehicle.description}
+              </DetailPane>
+
+              <DetailPane title="Body">{vehicle.description}</DetailPane>
+
+              <DetailPane title="Interior">{vehicle.description}</DetailPane>
+
+              <DetailPane title="Additional Info">
+                {vehicle.description}
+              </DetailPane>
             </>
           )}
         </div>

@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) =>
     root: {
       margin: "8px auto",
       width: "initial",
-      maxWidth: 1200,
-      padding: "0 8px",
     },
     loadingSpiner: {
       position: "absolute",

@@ -21,7 +21,6 @@ import { setIsAuthed } from "../../store/auth/reducer";
 import { selectIsAuthed } from "../../store/auth/reducer";
 
 // User Imports
-import Drawer from "./Drawer";
 import SearchField from "./SearchFields";
 
 const useStyles = makeStyles((theme) =>
@@ -110,11 +109,10 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-function ButtonAppBar() {
+function ButtonAppBar({ handleDrawerChange }) {
   const classes = useStyles();
   let history = useHistory();
 
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location = useLocation();
   const open = Boolean(anchorEl);
@@ -129,10 +127,8 @@ function ButtonAppBar() {
     setAnchorEl(null);
   };
 
-  const handleDrawerChange = () => setDrawerOpen(!drawerOpen);
-
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{}}>
       <Grid
         className={classes.gridContainer}
         container
@@ -202,8 +198,6 @@ function ButtonAppBar() {
         </div>
 
         {pathname === "/" && <SearchField />}
-
-        <Drawer open={drawerOpen} handleDrawerChange={handleDrawerChange} />
       </Grid>
     </div>
   );
