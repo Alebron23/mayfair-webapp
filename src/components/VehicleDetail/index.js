@@ -19,6 +19,8 @@ import { useVehicleQuery, baseEndpoint } from "../../store/services/api";
 
 // User Imports
 import DetailPane from "../common/DetailPane";
+import { GradientButton } from "../common/Buttons";
+import { redGradient } from "../common/Buttons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -314,28 +316,76 @@ export default function VehicleDetail() {
                     </span>
                   </div>
                 )}
-              </DetailPane>
-
-              <DetailPane title="Details">
-                {vehicle.description}
-
                 <Divider />
                 <div className={classes.contactNumber}>
-                  Call <span className={classes.phoneNumber}>864-804-7528</span>
+                  <GradientButton size="small" href="tel:+1-864-804-7528">
+                    Call Now
+                  </GradientButton>
                 </div>
               </DetailPane>
 
+              <DetailPane title="Details">{vehicle.description}</DetailPane>
+
               <DetailPane title="Mechanical">
-                <h4 style={{ margin: 0 }}>Upgrades</h4>
-                {vehicle.description}
+                <h4
+                  style={{
+                    margin: "8px 0 0 8px",
+                    color: `orange`, // ${redGradient} !important
+                  }}
+                >
+                  General
+                </h4>
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>N54B30 3.0L Engine</li>
+                  <li>GS6 6SPD Manual </li>
+                </ul>
+
+                {/* vehicle.upgrades ? <h4 style={{ margin: 0 }}>Upgrades</h4> : null */}
+                <h4 style={{ margin: "8px 0 0 8px" }}>Upgrades</h4>
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>PURE600 N54 Upgrade Turbos </li>
+                  <li>e93 M3 Differential</li>
+                  <li>Stage 3 Performance Twin Disc Clutch Kit</li>
+                </ul>
               </DetailPane>
 
-              <DetailPane title="Body">{vehicle.description}</DetailPane>
+              <DetailPane title="Body">
+                <h4 style={{ margin: "8px 0 0 8px" }}>General</h4>
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>Body is great shape overall.</li>
+                  <li>
+                    A few blemishes but for a 2007 car it's in good shape.
+                  </li>
+                  <li>Looks sharp.</li>
+                </ul>
 
-              <DetailPane title="Interior">{vehicle.description}</DetailPane>
+                <h4 style={{ margin: "8px 0 0 8px" }}>Upgrades</h4>
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>M3 front bumper.</li>
+                  <li>Carbon fiber rear diffuser.</li>
+                </ul>
+              </DetailPane>
+
+              <DetailPane title="Interior">
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>
+                    Sport package black leather interior with silver trim.{" "}
+                  </li>
+                  <li>
+                    Interior is in very good condition and looks new for the
+                    model year.{" "}
+                  </li>
+                  <li>Display in dash. </li>
+                </ul>
+              </DetailPane>
 
               <DetailPane title="Additional Info">
-                {vehicle.description}
+                <ul style={{ paddingLeft: 24 }}>
+                  <li>Apex 18" rims </li>
+                  <li>New Continental tires</li>
+                  <li>M3 Front bumper</li>
+                  <li>Carbon Fiber Rear Diffuser </li>
+                </ul>
               </DetailPane>
             </>
           )}

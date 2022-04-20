@@ -5,6 +5,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Divider from "@mui/material/Divider";
 import AppBar from "../components/AppBar";
 import Slide from "@mui/material/Slide";
+import Footer from "../components/Footer";
 
 //UserImports
 import Drawer from "../components/AppBar/Drawer";
@@ -39,6 +40,7 @@ const Main = ({
       <AppBar handleDrawerChange={handleDrawerChange} />
       <Drawer open={drawerOpen} handleDrawerChange={handleDrawerChange} />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 };
