@@ -2,6 +2,7 @@ import React from "react";
 import { render, hydrate } from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 import Notifications from "./components/Notifications";
 import VehicleList from "./components/VehicleList";
@@ -20,7 +21,8 @@ import * as serviceWorker from "./serviceWorker";
 import store from "./store";
 import WithLayout from "./WithLayout";
 import MainLayout from "./layouts";
-console.log(WithLayout);
+import Footer from "./components/Footer";
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -129,6 +131,7 @@ const App = () => {
             />
           </Switch>
         </Router>
+        {/* <Footer /> */}
       </React.StrictMode>
     </Provider>
   );

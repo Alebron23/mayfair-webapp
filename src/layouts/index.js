@@ -6,6 +6,7 @@ import Divider from "@mui/material/Divider";
 import AppBar from "../components/AppBar";
 import Slide from "@mui/material/Slide";
 import Footer from "../components/Footer";
+import Box from "@mui/material/Box";
 
 //UserImports
 import Drawer from "../components/AppBar/Drawer";
@@ -31,15 +32,25 @@ const Main = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerChange = () => setDrawerOpen(!drawerOpen);
-
+  // maxWidth: 1200, padding: "0 16px", margin: "0 auto"
   return (
-    <div style={{ maxWidth: 1200, padding: "0 8px", margin: "0 auto" }}>
+    <div style={{}}>
       {/* <HideOnScroll>
         
       </HideOnScroll> */}
       <AppBar handleDrawerChange={handleDrawerChange} />
       <Drawer open={drawerOpen} handleDrawerChange={handleDrawerChange} />
-      <main>{children}</main>
+      <main
+        style={{
+          minHeight: "100vh",
+          maxWidth: 1200,
+          margin: "0 auto 32px auto",
+          padding: "0 16px",
+        }}
+      >
+        {/* <Box height={{ xs: 56, sm: 64 }} /> */}
+        {children}
+      </main>
       <Footer />
     </div>
   );

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import palettes from "./components/common/paletteTypes";
 // import PropTypes from 'prop-types';
 import { ThemeProvider } from "@mui/material/styles";
-// import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
-import getTheme from "./theme";
 import AOS from "aos";
+import getTheme from "./theme";
 
 export const useMode = () => {
   const [themeMode, setTheme] = useState("light");
@@ -82,14 +82,21 @@ export default function WithLayout({
     <ThemeProvider theme={getTheme(themeMode, paletteType)}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon */}
       <CssBaseline />
-      <Layout
-        themeMode={themeMode}
-        themeToggler={themeToggler}
-        paletteType={paletteType}
-        setThemePalette={setThemePalette}
-      >
-        <Component themeMode={themeMode} paletteType={paletteType} {...rest} />
-      </Layout>
+
+      <Paper elevation={0}>
+        <Layout
+          themeMode={themeMode}
+          themeToggler={themeToggler}
+          paletteType={paletteType}
+          setThemePalette={setThemePalette}
+        >
+          <Component
+            themeMode={themeMode}
+            paletteType={paletteType}
+            {...rest}
+          />
+        </Layout>
+      </Paper>
     </ThemeProvider>
   );
 }

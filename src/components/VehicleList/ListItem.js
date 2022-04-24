@@ -15,8 +15,9 @@ import { addNotif } from "../../store/notifications/actions";
 // component imports
 import Pic from "./Pic";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
+const useStyles = makeStyles((theme, key) => {
+  console.log(key);
+  return createStyles({
     root: {
       borderRadius: 15,
       boxSizing: "border-box",
@@ -26,6 +27,19 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "#f0f4f5", // #f0f3f5 #cededf  #f0f4f5 #ffffff
       boxShadow: `15px 15px 20px #cfcfd1,
         -15px -15px 20px #ffffff`,
+    },
+    gridContainer: {
+      padding: "8px 0px",
+
+      [theme.breakpoints.up("sm")]: {
+        padding: "8px",
+        "&:nth-of-type(1n)": {
+          paddingLeft: 0,
+        },
+        "&:nth-of-type(2n)": {
+          padding: "8px 0 8px 8px",
+        },
+      },
     },
     imgContainer: {
       width: "100%",
@@ -37,7 +51,7 @@ const useStyles = makeStyles((theme) =>
     vehiclePic: {
       width: "100%",
       height: "auto",
-      borderRadius: "20px 20px 0 0 ",
+      borderRadius: "15px 15px 0 0 ",
       "&:hover": {
         cursor: "pointer",
       },
@@ -45,7 +59,7 @@ const useStyles = makeStyles((theme) =>
     info: {
       width: "100%",
       padding: 16,
-      borderRadius: "0 0 20px 20px",
+      borderRadius: "0 0 15px 15px",
       borderTop: "none",
       boxSizing: "border-box",
 
@@ -83,21 +97,21 @@ const useStyles = makeStyles((theme) =>
       fontWeight: "bold",
       marginLeft: theme.spacing(4),
     },
-  })
-);
+  });
+});
 
 // NOTE: Had to fix authentication issue with the session by using axios instead of the base Fetch
 // method that rtk query comes with.
 const ListItem = React.memo(
-  ({ vehicle = {}, isAuthed, isLoading, addNotification }) => {
-    const classes = useStyles();
+  ({ vehicle = {}, isAuthed, isLoading, addNotification, key }) => {
+    const classes = useStyles(key);
     let history = useHistory();
     const { picIds } = vehicle;
     const price = Number.parseFloat(vehicle.price.replace(/,/g, ""), 10);
     const payments = Math.floor(price / 60 + 40);
 
     return (
-      <Grid item xs={12} md={6} style={{ padding: 8 }}>
+      <Grid className={classes.gridContainer} item xs={12} md={6}>
         <div
           className={classes.root}
           onClick={() => {

@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       marginLeft: "auto",
+      width: "100%",
+      marginTop: 16,
 
       "&:hover": {
         boxShadow: "1px 3px 10px rgba(0,0,0, .25)",
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
         width: "auto",
+        marginTop: 0,
       },
     },
     input: {

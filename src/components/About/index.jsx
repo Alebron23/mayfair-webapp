@@ -39,7 +39,15 @@ function AboutPage() {
         <Grid container spacing={3} direction="column">
           <h4 style={{ margin: "16px 0 0 24px" }}>Address</h4>
           <ul style={{ paddingLeft: 48 }}>
-            <li>161 Wingo Rd, Roebuck, SC 29376</li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://goo.gl/maps/AHxoiZ2G1G6oZBxKA"
+              >
+                161 Wingo Rd, Roebuck, SC 29376
+              </a>
+            </li>
           </ul>
 
           <h4 style={{ margin: "8px 0 0 24px" }}>Email</h4>

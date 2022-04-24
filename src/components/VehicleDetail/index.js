@@ -27,12 +27,10 @@ const useStyles = makeStyles((theme) =>
     outerWrapper: {
       position: "relative",
       margin: "0 auto",
-      maxWidth: 1200,
     },
     paddingWrapper: {},
     root: {
       width: "100%",
-      padding: 16,
       display: "flex",
       boxSizing: "border-box",
       justifyContent: "center",

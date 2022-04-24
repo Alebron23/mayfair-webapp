@@ -11,7 +11,7 @@ export function GradientButton({ children, valid, sx, ...props }) {
       sx={{
         width: 100,
         height: 40,
-        borderRadius: 20,
+        borderRadius: 15,
         background: redGradient,
         fontWeight: "bold",
         ...sx,

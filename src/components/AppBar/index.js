@@ -29,11 +29,9 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       margin: "0 auto",
       maxWidth: 1200,
+      padding: 16,
     },
-    gridContainer: {
-      padding: "0 16px",
-      marginTop: 8,
-    },
+    gridContainer: {},
     logoImg: {
       width: 23,
       height: 23,
@@ -44,13 +42,8 @@ const useStyles = makeStyles((theme) =>
       },
     },
     title: {
-      display: "none",
-
       "&:hover": {
         cursor: "pointer",
-      },
-      "@media only screen and (min-width: 750px)": {
-        display: "initial",
       },
     },
     location: {
@@ -133,9 +126,11 @@ function ButtonAppBar({ handleDrawerChange }) {
         className={classes.gridContainer}
         container
         alignItems="center"
-        style={{
-          paddingRight: pathname === "/" ? "16px" : 0,
-        }}
+        style={
+          {
+            // paddingRight: pathname === "/" ? "16px" : 0,
+          }
+        }
       >
         <IconButton
           edge="start"

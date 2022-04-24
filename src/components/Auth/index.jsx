@@ -40,9 +40,9 @@ const useStyles = makeStyles((theme) =>
     },
     form: {
       maxWidth: 1200,
-      width: "96%",
+      // width: "96%",
       boxSizing: "border-box",
-      margin: "0 auto",
+      // margin: "0 auto",
       display: "block",
     },
     fieldGrid: {
