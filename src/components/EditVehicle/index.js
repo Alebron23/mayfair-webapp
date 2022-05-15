@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) =>
     title: {},
     form: {
       maxWidth: 1200,
-      width: "96%",
       boxSizing: "border-box",
       margin: "0 auto",
       display: "block",

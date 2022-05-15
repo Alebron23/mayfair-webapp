@@ -12,10 +12,15 @@ const Footer = () => (
     spacing={2}
     style={{
       backgroundColor: "#f5f5f5",
-      padding: "8px 16px",
+      // padding: "8px 24px",
+      // padding: 8,
     }}
   >
-    <Grid container spacing={2} style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <Grid
+      container
+      spacing={2}
+      style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px" }}
+    >
       <Grid item xs={12}>
         <Box
           display={"flex"}

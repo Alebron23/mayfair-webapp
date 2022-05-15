@@ -6,9 +6,7 @@ import { GradientButton } from "../common/Buttons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
-      padding: "0 16px",
-    },
+    root: {},
     title: {
       textAlign: "center",
       marginTop: 0,

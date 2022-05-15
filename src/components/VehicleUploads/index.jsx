@@ -23,19 +23,10 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: "100%",
-      // height: "calc(100vh - 56px)",
-      //   backgroundImage: `url(${backgroundGradient})`,
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundSize: "cover",
-
-      // "@media only screen and (min-width: 600px)": {
-      //   height: "calc(100vh - 64px)",
-      // },
     },
     title: {},
     form: {
       maxWidth: 1200,
-      width: "96%",
       boxSizing: "border-box",
       margin: "0 auto",
       display: "block",
