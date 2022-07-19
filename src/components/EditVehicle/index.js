@@ -181,7 +181,7 @@ function EditVehicle({ addNotification, isAuthed }) {
       fd.append("transmission", values.transmission);
       fd.append("motor", values.motor);
       fd.append("description", values.description);
-      fd.append("picIds", JSON.stringify(picIds)); // JSON.stringify(picIds)
+      fd.append("picIds", JSON.stringify(picIds));
 
       try {
         // FormData transforms the request you attach it to and puts it's own headers
@@ -257,7 +257,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="VIN#"
                       name="vin"
-                      id="vehilceUpload-vin"
+                      id="vehilceEdit-vin"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -269,7 +269,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Year"
                       name="year"
-                      id="vehilceUpload-year"
+                      id="vehilceEdit-year"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -281,7 +281,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Make"
                       name="make"
-                      id="vehilceUpload-make"
+                      id="vehilceEdit-make"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -293,7 +293,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Model"
                       name="model"
-                      id="vehilceUpload-model"
+                      id="vehilceEdit-model"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -305,7 +305,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Mileage"
                       name="mileage"
-                      id="vehilceUpload-mileage"
+                      id="vehilceEdit-mileage"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -317,7 +317,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Price"
                       name="price"
-                      id="vehilceUpload-price"
+                      id="vehilceEdit-price"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -329,7 +329,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Transmission"
                       name="transmission"
-                      id="vehilceUpload-transmission"
+                      id="vehilceEdit-transmission"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -348,7 +348,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Drivetrain"
                       name="drivetrain"
-                      id="vehilceUpload-drivetrain"
+                      id="vehilceEdit-drivetrain"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -373,7 +373,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Motor"
                       name="motor"
-                      id="vehilceUpload-motor"
+                      id="vehilceEdit-motor"
                       variant="outlined"
                       size="small"
                       className={classes.textField}
@@ -384,7 +384,7 @@ function EditVehicle({ addNotification, isAuthed }) {
                     <TextField
                       label="Description"
                       name="description"
-                      id="vehilceUpload-description"
+                      id="vehilceEdit-description"
                       variant="outlined"
                       size="small"
                       className={classes.textField}

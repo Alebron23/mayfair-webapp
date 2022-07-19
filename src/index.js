@@ -21,7 +21,6 @@ import * as serviceWorker from "./serviceWorker";
 import store from "./store";
 import WithLayout from "./WithLayout";
 import MainLayout from "./layouts";
-import Footer from "./components/Footer";
 
 const App = () => {
   return (
