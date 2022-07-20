@@ -17,7 +17,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "aos": "^2.3.4",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "emailjs-com": "^2.6.4",
@@ -43,8 +42,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,19 +66,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "imagekitio-react": "^1.0.9",
-    "react-snap": "^1.23.0",
     "redux-devtools": "^3.7.0",
     "redux-devtools-extension": "^2.13.8"
-  },
-  "reactSnap": {
-    "inlineCss": true,
-    "fixWebpackChunksIssue": false,
-    "puppeteer": {
-      "cache": false
-    },
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ]
   }
 }

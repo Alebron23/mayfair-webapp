@@ -45,7 +45,7 @@ function VehicleList({ searching, isAuthed }) {
   const classes = useStyles();
   const { data: vehicles = [], isLoading } = useVehiclesQuery();
   let history = useHistory();
-
+  console.log("NEW UPDATE");
   return (
     <>
       {isAuthed && (

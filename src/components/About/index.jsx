@@ -1,4 +1,5 @@
 import React from "react";
+import Paper from "@mui/material/Paper";
 import Grid from "@material-ui/core/Grid";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import DetailPane from "../common/DetailPane";
@@ -63,12 +64,14 @@ function AboutPage() {
       <DetailPane>
         <Grid container spacing={3}>
           <Grid container item direction="column" wrap="nowrap" xs={12} lg={8}>
-            <p className={classes.bottomInfo}>
-              Mayfairs Motors was founded in the year 2020 by two business
-              partners. The aim of the business is to provide customers good
-              prices on vehicles with an easy buying experience from people they
-              can trust.
-            </p>
+            <Paper className={classes.bottomInfo}>
+              <p>
+                Mayfairs Motors was founded in the year 2020 by two business
+                partners. The aim of the business is to provide customers good
+                prices on vehicles with an easy buying experience from people
+                they can trust.
+              </p>
+            </Paper>
           </Grid>
 
           <Grid container item xs={12} lg={4}>

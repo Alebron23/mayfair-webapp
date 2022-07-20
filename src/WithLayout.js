@@ -5,7 +5,6 @@ import palettes from "./components/common/paletteTypes";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
-import AOS from "aos";
 import getTheme from "./theme";
 
 export const useMode = () => {
@@ -50,20 +49,20 @@ export default function WithLayout({
   layout: Layout,
   ...rest
 }) {
-  React.useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
+  // React.useEffect(() => {
+  //   // Remove the server-side injected CSS.
+  //   const jssStyles = document.querySelector("#jss-server-side");
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
 
-    AOS.init({
-      once: true,
-      delay: 50,
-      duration: 500,
-      easing: "ease-in-out",
-    });
-  }, []);
+  //   AOS.init({
+  //     once: true,
+  //     delay: 50,
+  //     duration: 500,
+  //     easing: "ease-in-out",
+  //   });
+  // }, []);
 
   const [
     themeMode,
@@ -73,9 +72,9 @@ export default function WithLayout({
     mountedComponent,
   ] = useMode();
 
-  useEffect(() => {
-    AOS.refresh();
-  }, [mountedComponent, themeMode, paletteType]);
+  // useEffect(() => {
+  //   AOS.refresh();
+  // }, [mountedComponent, themeMode, paletteType]);
 
   console.log(Component);
   return (
