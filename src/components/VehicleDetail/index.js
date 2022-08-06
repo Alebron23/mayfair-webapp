@@ -139,7 +139,8 @@ const useStyles = makeStyles((theme) => {
       textDecoration: "underline",
     },
     gradientHeader: {
-      width: 75,
+      fontWeight: "bold",
+      fontSize: 18,
       margin: "8px 0 0 8px",
       backgroundImage: `${redGradient}`,
       backgroundColor: "red",
@@ -336,14 +337,14 @@ export default function VehicleDetail() {
               <DetailPane title="Details">{vehicle.description}</DetailPane>
 
               <DetailPane title="Mechanical">
-                <h4 className={classes.gradientHeader}>General</h4>
+                <span className={classes.gradientHeader}>General</span>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>N54B30 3.0L Engine</li>
                   <li>GS6 6SPD Manual </li>
                 </ul>
 
                 {/* vehicle.upgrades ? <h4 style={{ margin: 0 }}>Upgrades</h4> : null */}
-                <h4 className={classes.gradientHeader}>Upgrades</h4>
+                <span className={classes.gradientHeader}>Upgrades</span>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>PURE600 N54 Upgrade Turbos </li>
                   <li>e93 M3 Differential</li>
@@ -352,7 +353,7 @@ export default function VehicleDetail() {
               </DetailPane>
 
               <DetailPane title="Body">
-                <h4 className={classes.gradientHeader}>General</h4>
+                <span className={classes.gradientHeader}>General</span>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>Body is great shape overall.</li>
                   <li>
@@ -361,7 +362,7 @@ export default function VehicleDetail() {
                   <li>Looks sharp.</li>
                 </ul>
 
-                <h4 className={classes.gradientHeader}>Upgrades</h4>
+                <span className={classes.gradientHeader}>Upgrades</span>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>M3 front bumper.</li>
                   <li>Carbon fiber rear diffuser.</li>
