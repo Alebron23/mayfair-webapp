@@ -22,13 +22,12 @@ import DetailPane from "../common/DetailPane";
 import { GradientButton } from "../common/Buttons";
 import { redGradient } from "../common/Buttons";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
+const useStyles = makeStyles((theme) => {
+  return createStyles({
     outerWrapper: {
       position: "relative",
       margin: "0 auto",
     },
-    paddingWrapper: {},
     root: {
       width: "100%",
       display: "flex",
@@ -139,8 +138,20 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.info.main,
       textDecoration: "underline",
     },
-  })
-);
+    gradientHeader: {
+      width: 75,
+      margin: "8px 0 0 8px",
+      backgroundImage: `${redGradient}`,
+      backgroundColor: "red",
+      backgroundSize: "100%",
+      backgroundRepeat: "repeat",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      MozBackgroundClip: "text",
+      MozTextFillColor: "transparent",
+    },
+  });
+});
 
 export default function VehicleDetail() {
   const classes = useStyles();
@@ -185,7 +196,7 @@ export default function VehicleDetail() {
                   className={classes.loadingContainer}
                   container
                   alignItems="center"
-                  justify="center"
+                  justifyContent="center"
                   style={{
                     display: loading ? "flex" : "none",
                   }}
@@ -198,7 +209,7 @@ export default function VehicleDetail() {
                     className={classes.loadingContainer}
                     container
                     alignItems="center"
-                    justify="center"
+                    justifyContent="center"
                     direction="column"
                   >
                     <WarningIcon className={classes.warningIcon} />
@@ -325,21 +336,14 @@ export default function VehicleDetail() {
               <DetailPane title="Details">{vehicle.description}</DetailPane>
 
               <DetailPane title="Mechanical">
-                <h4
-                  style={{
-                    margin: "8px 0 0 8px",
-                    color: `orange`, // ${redGradient} !important
-                  }}
-                >
-                  General
-                </h4>
+                <h4 className={classes.gradientHeader}>General</h4>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>N54B30 3.0L Engine</li>
                   <li>GS6 6SPD Manual </li>
                 </ul>
 
                 {/* vehicle.upgrades ? <h4 style={{ margin: 0 }}>Upgrades</h4> : null */}
-                <h4 style={{ margin: "8px 0 0 8px" }}>Upgrades</h4>
+                <h4 className={classes.gradientHeader}>Upgrades</h4>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>PURE600 N54 Upgrade Turbos </li>
                   <li>e93 M3 Differential</li>
@@ -348,7 +352,7 @@ export default function VehicleDetail() {
               </DetailPane>
 
               <DetailPane title="Body">
-                <h4 style={{ margin: "8px 0 0 8px" }}>General</h4>
+                <h4 className={classes.gradientHeader}>General</h4>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>Body is great shape overall.</li>
                   <li>
@@ -357,7 +361,7 @@ export default function VehicleDetail() {
                   <li>Looks sharp.</li>
                 </ul>
 
-                <h4 style={{ margin: "8px 0 0 8px" }}>Upgrades</h4>
+                <h4 className={classes.gradientHeader}>Upgrades</h4>
                 <ul style={{ paddingLeft: 24 }}>
                   <li>M3 front bumper.</li>
                   <li>Carbon fiber rear diffuser.</li>

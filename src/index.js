@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "mapbox-gl/dist/mapbox-gl.css";
 
 import Notifications from "./components/Notifications";
 import VehicleList from "./components/VehicleList";

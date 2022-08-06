@@ -32,12 +32,9 @@ const Main = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerChange = () => setDrawerOpen(!drawerOpen);
-  // maxWidth: 1200, padding: "0 16px", margin: "0 auto"
+
   return (
     <div style={{}}>
-      {/* <HideOnScroll>
-        
-      </HideOnScroll> */}
       <AppBar handleDrawerChange={handleDrawerChange} />
       <Drawer open={drawerOpen} handleDrawerChange={handleDrawerChange} />
       <main
@@ -48,7 +45,6 @@ const Main = ({
           padding: "0 16px",
         }}
       >
-        {/* <Box height={{ xs: 56, sm: 64 }} /> */}
         {children}
       </main>
       <Footer />

@@ -64,14 +64,12 @@ function AboutPage() {
       <DetailPane>
         <Grid container spacing={3}>
           <Grid container item direction="column" wrap="nowrap" xs={12} lg={8}>
-            <Paper className={classes.bottomInfo}>
-              <p>
-                Mayfairs Motors was founded in the year 2020 by two business
-                partners. The aim of the business is to provide customers good
-                prices on vehicles with an easy buying experience from people
-                they can trust.
-              </p>
-            </Paper>
+            <p className={classes.bottomInfo}>
+              Mayfairs Motors was founded in the year 2020 by two business
+              partners. The aim of the business is to provide customers good
+              prices on vehicles with an easy buying experience from people they
+              can trust.
+            </p>
           </Grid>
 
           <Grid container item xs={12} lg={4}>

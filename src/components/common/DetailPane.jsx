@@ -12,12 +12,6 @@ const DetailContainer = styled("div")(({ theme }) => ({
   boxSizing: "border-box",
 }));
 
-// width: "100%",
-// marginTop: 16,
-// padding: 16,
-// boxSizing: "border-box",
-// minWidth: 275,
-
 export default function Detail({ title, style, children }) {
   return (
     <DetailContainer style={style}>

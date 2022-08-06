@@ -49,36 +49,11 @@ export default function WithLayout({
   layout: Layout,
   ...rest
 }) {
-  // React.useEffect(() => {
-  //   // Remove the server-side injected CSS.
-  //   const jssStyles = document.querySelector("#jss-server-side");
-  //   if (jssStyles) {
-  //     jssStyles.parentElement.removeChild(jssStyles);
-  //   }
-
-  //   AOS.init({
-  //     once: true,
-  //     delay: 50,
-  //     duration: 500,
-  //     easing: "ease-in-out",
-  //   });
-  // }, []);
-
-  const [
-    themeMode,
-    themeToggler,
-    paletteType,
-    setThemePalette,
-    mountedComponent,
-  ] = useMode();
-
-  // useEffect(() => {
-  //   AOS.refresh();
-  // }, [mountedComponent, themeMode, paletteType]);
-
-  console.log(Component);
+  const [themeMode, themeToggler, paletteType, setThemePalette] = useMode();
+  const theme = getTheme(themeMode, paletteType);
+  console.log("THEME 2:", theme);
   return (
-    <ThemeProvider theme={getTheme(themeMode, paletteType)}>
+    <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon */}
       <CssBaseline />
 
