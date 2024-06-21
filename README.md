@@ -1,3 +1,9 @@
+## Description
+This repo serves as the frontend for the Mayfair Motors web application. It is a CRA app with Material UI as the component library. 
+This application allows the dealership to upload vehcile inventory for display on their website. Every vehicle has a details page with more
+vehicle details and pictures of the vehicle. The site also provides a form for customers to complete a credit application. This application communicates with a
+Node.js backend to retrieve vehicle information. 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
